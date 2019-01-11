@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var pathFolder = 'Uploads/images/users/';
-
+const config = require('../config');
 const userSchema = new Schema({
 
     email: {
@@ -54,9 +54,9 @@ userSchema.methods.getUser=function () {
 
 userSchema.virtual('pictureProfile').get(function () {
     if (this.photo !== undefined) {
-    return process.env.host+pathFolder + this.photo;
+    return config.host+pathFolder + this.photo;
     }else{
-        return process.env.host+pathFolder +'avatar.png';
+        return config.host+pathFolder +'avatar.png';
     }
 });
 
