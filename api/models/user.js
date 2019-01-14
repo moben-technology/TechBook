@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
 var pathFolder = 'Uploads/images/users/';
 const config = require('../config');
+
 const userSchema = new Schema({
 
     email: {
@@ -45,9 +46,17 @@ userSchema.methods.getUser=function () {
         lastName: this.lastName,
         gender: this.gender,
         age: this.age,
-        phto: this.phto,
         pictureProfile:this.pictureProfile,
         createdAt: this.createdAt
+    })
+};
+
+userSchema.methods.getShortInfoUser=function () {
+    return({
+        _id: this._id,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        pictureProfile:this.pictureProfile
     })
 };
 

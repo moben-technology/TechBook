@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const config = require('./config');
 const usersRoutes = require('./routes/users');
 const sectorsRoutes = require('./routes/sectors');
-const publicationsRoutes = require('./routes/sectors');
+const publicationsRoutes = require('./routes/publications');
 
 //Database connection
 mongoose.Promise = global.Promise;
