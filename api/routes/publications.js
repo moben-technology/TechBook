@@ -5,6 +5,7 @@ var multer = require('multer');
 var path = require('path');
 var fs = require('fs');
 const mongoose = require('mongoose');
+var async = require('async');
 
 // upload file (image || video) via multer
 var storageFile = multer.diskStorage({
@@ -35,7 +36,7 @@ router.post('/AddPublication',uploadFile.single('file'), function (req, res) {
         newPublication.title = req.body.title
         newPublication.text = req.body.text
         newPublication.sector = req.body.sectorId
-        newPublication.owner = req.body.userId
+        newPublication.owner = req.body.ownerId
         newPublication.type_file = req.body.type_file
         
         //save the publication
@@ -81,14 +82,26 @@ router.post('/getPublicationById', function (req, res) {
                 });
             }
              else {
-                    res.json({
-                        status: 1,
-                        message: 'get Publication successfully',
-                        data: {
-                            publication: publication.getPublication(),
+                var pubDetails = publication.getPublication()
+                // test if user Connected like || dislike publication
+                if (req.body.userIdConnected){
+                    // parcourir liste des j'aime à partir du résultat détaillée (of findOne)
+                    async.forEachOf(publication.likes, function (like, index, next) {
+                        if (like.user == req.body.userIdConnected){
+                            pubDetails.isLiked = true;
                         }
-                    });
+                        next();
+                    })
                 }
+                
+                res.json({
+                    status: 1,
+                    message: 'get Publication successfully',
+                    data: {
+                        publication: pubDetails
+                    }
+                });
+            }
         });
     
 
@@ -104,7 +117,7 @@ router.post('/getPublicationById', function (req, res) {
 });
 
 // get Publications By Owner with pagination
-router.post('/getAllPublicationsByUser', function (req, res) {
+router.post('/getAllPublicationsByOwner', function (req, res) {
     try {
         var perPage = 10, page = 1;
         if (req.body.perPage !== undefined) {
@@ -114,7 +127,7 @@ router.post('/getAllPublicationsByUser', function (req, res) {
             page = parseInt(req.body.page);
         }
         Publication
-        .find({'owner': req.body.userId}, {}, {
+        .find({'owner': req.body.ownerId}, {}, {
             sort: {'date': -1},
             skip: (perPage * page) - perPage,
             limit: perPage})
@@ -128,13 +141,32 @@ router.post('/getAllPublicationsByUser', function (req, res) {
                 });
             }
             else {
+                var allPublicationsDetails = []
+                async.forEachOf(publications, function (publication, index, next) {
+                   
+                    var pubDetails = publication.getPublication()
+                    // test if user Connected like || dislike publication
+                    if (req.body.userIdConnected){
+                        // parcourir liste des j'aime à partir du résultat détaillée (of findOne)
+                        async.forEachOf(publication.likes, function (like, index, next) {
+                            if (like.user == req.body.userIdConnected){
+                                pubDetails.isLiked = true;
+                            }
+                            next();
+                        })
+                    }
+                    
+                    allPublicationsDetails.push(pubDetails);
+                    next();
+                })
                 // configs is now a map of JSON data
-                Publication.find({'owner': req.body.userId}).exec(function (err, count) {
+                Publication.find({'owner': req.body.ownerId}).exec(function (err, count) {
                     res.json({
                         status: 1,
                         message: 'get Publications By User successfully',
                         data: {
-                            publications: publications,
+                            // publications: publications,
+                            publications: allPublicationsDetails,
                             currentPage: page,
                             Totalpages: Math.ceil(count.length / perPage)
                         }
@@ -219,6 +251,8 @@ router.post('/deletePublication', function (req, res) {
     }
 });
 
+//++++++++++++ CRUD COMMENTS ++++++++++++++++++
+
 // add Comment to publication
 router.post('/addComment', function (req, res) {
     try {
@@ -273,6 +307,30 @@ router.post('/addComment', function (req, res) {
     }
 });
 
+// delete comment 
+router.post('/deleteComment', function (req, res) {
+    Publication.findOne({'_id':req.body.publicationId},function (err,publication) {
+        if (err) {
+            return res.json({
+                status: 0,
+                message: ('Error find publication ') + err
+            });
+        } else {
+            for (var i = 0; i < publication.comments.length; i++) {
+                if(publication.comments[i]._id==req.body.commentId)
+                {
+                    publication.comments.splice(i,1);
+                }
+            }
+            publication.save();
+            res.json({
+                status: 1,
+                message : 'comment succefuuly deleted'
+            });
+        }
+    });
+});
+
 // get all comments of publication with pagination
 router.post('/getCommentsByPublication', function (req, res) {
     try {
@@ -323,7 +381,7 @@ router.post('/getCommentsByPublication', function (req, res) {
                                             countComments = count.comments;
                                             res.json({
                                                 status: 1,
-                                                message: 'get Comment  All succeffully',
+                                                message: 'get All Comments succeffully',
                                                 data: {
                                                     comments: commentsList,
                                                     currentPage: page,
@@ -334,7 +392,7 @@ router.post('/getCommentsByPublication', function (req, res) {
                                     } else {
                                         res.json({
                                             status: 1,
-                                            message: 'get Comment  All succeffully',
+                                            message: 'get All Comments succeffully',
                                             data: {
                                                 comments: commentsList,
                                                 current: page,
@@ -376,8 +434,63 @@ router.post('/getCommentsByPublication', function (req, res) {
     }
 });
 
-// delete comment 
-router.post('/deleteComment', function (req, res) {
+
+//++++++++++++ CRUD LIKES ++++++++++++++++++
+
+// add like to publication
+router.post('/addLikeToPublication', function (req, res) {
+    try {
+        Publication.findOne({'_id': req.body.publicationId}).exec(function (err, publication) {
+            if (err) {
+                return res.json({
+                    status: 0,
+                    message: ('Error find publication ') + err
+                });
+            } else {
+                try {
+                    var likeContent = [];
+                        likeContent = publication.likes;
+                        const like = {
+                            user: req.body.userId,
+                        };
+                        likeContent.push(like);
+                        publication.likes = likeContent;
+                        publication.save(function (err) {
+                            if (err) {
+                                console.log('error' + err)
+                            } else {
+                                return res.json({
+                                    status: 1,
+                                    message: 'Publication is liked succeffully'
+                                });
+                            }
+                        });
+                    
+                } catch (err) {
+                    console.log(err);
+                    res.json({
+                        status: 0,
+                        message: '500 Internal Server Error',
+                        data: {}
+                    })
+
+                }
+            }
+        });
+
+    } catch (err) {
+        console.log(err);
+        res.json({
+            status: 0,
+            message: '500 Internal Server Error',
+            data: {}
+        })
+
+    }
+});
+
+// dislike Publication (delete object like from list)  
+router.post('/dislikePublication', function (req, res) {
     Publication.findOne({'_id':req.body.publicationId},function (err,publication) {
         if (err) {
             return res.json({
@@ -385,19 +498,122 @@ router.post('/deleteComment', function (req, res) {
                 message: ('Error find publication ') + err
             });
         } else {
-            for (var i = 0; i < publication.comments.length; i++) {
-                if(publication.comments[i]._id==req.body.commentId)
+            for (var i = 0; i < publication.likes.length; i++) {
+                if(publication.likes[i].user == req.body.userId)
                 {
-                    publication.comments.splice(i,1);
+                    publication.likes.splice(i,1);
                 }
             }
             publication.save();
             res.json({
                 status: 1,
-                message : 'comment succefuuly deleted'
+                message : 'Publication is disliked succeffully'
             });
         }
     });
+});
+
+// get list likes of publication with pagination
+router.post('/getListLikesByPublication', function (req, res) {
+    try {
+        var perPage = 10, page = 1;
+        if (req.body.perPage !== undefined) {
+            perPage = parseInt(req.body.perPage);
+        }
+        if (req.body.page !== undefined) {
+            page = parseInt(req.body.page);
+        }
+        var option = {"_id": mongoose.Types.ObjectId(req.body.publicationId)}
+        Publication.aggregate([
+            {"$unwind": "$likes"},
+            {"$match": option},
+            {"$sort": {"_id": 1, "likes.date": -1}},
+            {"$skip": (perPage * page) - perPage}, {"$limit": perPage},
+            {"$group": {"_id": "$_id", "likes": {"$push": "$likes"}}}
+
+        ]).exec(function (err, like) {
+            if (err) {
+                res.json({
+                    status: 0,
+                    message: ('erreur get liste likes') + err
+                });
+            } else {
+                try {
+                    Publication.findOne({_id: req.body.publicationId}).exec(function (err, count) {
+                        if (err) {
+                            res.json({
+                                status: 0,
+                                message: ('erreur get count publication ') + err
+                            });
+                        } else {
+                            try {
+                                Publication.populate(like, {
+                                    path: 'likes.user',
+                                    select: '_id firstName lastName pictureProfile'
+                                }, function (err, populatedLike) {
+                                    // Your populated translactions are inside populatedTransactions
+
+                                    var likesList = [];
+                                    if (populatedLike.length > 0) {
+                                        likesList = populatedLike[0].likes;
+                                    }
+                                    if (count) {
+                                        if (count.likes) {
+                                            var countLikes;
+                                            countLikes = count.likes;
+                                            res.json({
+                                                status: 1,
+                                                message: 'get liste likes succeffully',
+                                                data: {
+                                                    likes: likesList,
+                                                    currentPage: page,
+                                                    totalPages: Math.ceil(countLikes.length / perPage)
+                                                }
+                                            });
+                                        }
+                                    } else {
+                                        res.json({
+                                            status: 1,
+                                            message: 'get liste likes succeffully sssss',
+                                            data: {
+                                                likes: likesList,
+                                                currentPage: page,
+                                                totalPages: 1
+                                            }
+                                        });
+                                    }
+                                });
+                            } catch (err) {
+                                console.log(err);
+                                res.json({
+                                    status: 0,
+                                    message: '500 Internal Server Error',
+                                    data: {}
+                                })
+
+                            }
+                        }
+                    });
+                } catch (err) {
+                    console.log(err);
+                    res.json({
+                        status: 0,
+                        message: '500 Internal Server Error',
+                        data: {}
+                    })
+
+                }
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            status: 0,
+            message: '500 Internal Server Error',
+            data: {}
+        })
+
+    }
 });
 
 

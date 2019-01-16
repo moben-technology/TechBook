@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const config = require('../config');
 const Comment = require('./comment').commentSchema;
+const Like = require('./like').likeSchema;
 var pathFolderImagesPublications = 'Uploads/images/publications/';
 var pathFolderVideosPublications = 'Uploads/videos/';
 
@@ -31,6 +32,7 @@ const publicationSchema = new Schema({
         default: Date.now()
     },
     comments: [Comment],
+    likes: [Like],
     },
     {
         toJSON:{virtuals:true}
@@ -55,6 +57,9 @@ publicationSchema.methods.getPublication=function () {
         url_file: this.url_file,
         sector: this.sector,
         owner: this.owner,
+        nbrComments: this.comments.length,
+        nbrLikes: this.likes.length,
+        isLiked: false,
         createdAt: this.createdAt,
     })
 };

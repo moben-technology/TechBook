@@ -16,16 +16,6 @@ const commentSchema = new Schema ({
 });
 
 commentSchema.methods.getComments=function () {
-    var  userId;
-    if ( this.userId !== undefined && this.userId !== null){
-        if(this.userId._id) {
-            userId = this.userId.getShortInfoUser();
-        }else{
-            userId = this.userId;
-        }
-    }else{
-        userId = this.userId
-    }
     return({
         _id: this._id,
         text: this.text,
