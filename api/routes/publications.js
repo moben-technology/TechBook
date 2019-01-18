@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Publication = require('../models/publication');
+const Sector = require('../models/sector');
 var multer = require('multer');
 var path = require('path');
 var fs = require('fs');
@@ -128,7 +129,7 @@ router.post('/getAllPublicationsByOwner', function (req, res) {
         }
         Publication
         .find({'owner': req.body.ownerId}, {}, {
-            sort: {'date': -1},
+            sort: {'createdAt': -1},
             skip: (perPage * page) - perPage,
             limit: perPage})
         .populate('owner',{'firstName': 1,'lastName':1})
@@ -165,7 +166,6 @@ router.post('/getAllPublicationsByOwner', function (req, res) {
                         status: 1,
                         message: 'get Publications By User successfully',
                         data: {
-                            // publications: publications,
                             publications: allPublicationsDetails,
                             currentPage: page,
                             Totalpages: Math.ceil(count.length / perPage)
@@ -616,6 +616,252 @@ router.post('/getListLikesByPublication', function (req, res) {
     }
 });
 
+//++++++++++++ MODULE SEARCH ++++++++++++++++++
+// advanced search (with out pagination)
+router.get('/searchKey', function (req, res) {
+    try {
+        async.series([
+            // return the sectors of which titles of publications begin with sent word 
+                function (callback) {
+                    try {
+                        Publication.find({
+                            title: {
+                                $regex: '\\b' + req.query.q,
+                                $options: "gi"
+                            }
+                        }).distinct('sector').exec(function (err, ids) {
+                            if (err) {
+                                return res.json({
+                                    status: 0,
+                                    message: ('Error while getting publications') + err
+                                });
 
+                            } else {
+                                try {
+                                    Sector.find({'_id': {$in: ids}}, function (err, result) {
+
+                                        callback(null, result);
+                                    });
+                                } catch (err) {
+                                    console.log(err);
+                                    res.json({
+                                        status: 0,
+                                        message: '500 Internal Server Error',
+                                        data: {}
+                                    })
+
+                                }
+
+                            }
+                        });
+                    } catch (err) {
+                        console.log(err);
+                        res.json({
+                            status: 0,
+                            message: '500 Internal Server Error',
+                            data: {}
+                        })
+
+                    }
+                },
+                // return all publication which title begin with sent word (max 10 pub)
+                function (callback) {
+                    try {
+                        Publication.find({title: {$regex: '\\b' + req.query.q, $options: "gi"}}, {
+                            title: 1,
+                            sector: 1
+                        }).populate('sector').limit(10).exec(function (err, publications) {
+                            if (err) {
+                                return res.json({
+                                    status: 0,
+                                    message: ('Error while getting publications') + err
+                                });
+
+                            } else {
+                                callback(null, publications);
+
+                            }
+                        });
+                    } catch (err) {
+                        console.log(err);
+                        res.json({
+                            status: 0,
+                            message: '500 Internal Server Error',
+                            data: {}
+                        })
+
+                    }
+                }
+            ],
+            // optional callback
+            function (err, results) {
+                if (err) {
+                    return res.json({
+                        status: 0,
+                        message: ('Error while getting publications') + err
+                    });
+
+                } else {
+                    res.json({
+                        status: 1,
+                        data: {
+                            sectors: results[0],
+                            publication: results[1]
+                        }
+
+                    });
+                }
+            });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            status: 0,
+            message: '500 Internal Server Error',
+            data: {}
+        })
+
+    }
+});
+
+// search pub by title in specific sector (with pagination)
+router.post('/searchPubInSector', function (req, res) {
+    var perPage = 10, page = 1;
+    if (req.body.perPage !== undefined) {
+        perPage = parseInt(req.body.perPage);
+    }
+    if (req.body.page !== undefined) {
+        page = parseInt(req.body.page);
+    }
+    if (req.body.sectorId) {
+        if ((req.body.sectorId).length > 0) {
+            var option = {
+                title: {$regex: '\\b' + req.body.q, $options: "gi"},
+                sector: req.body.sectorId
+            };
+        }
+    } else {
+        var option = {
+            title: {$regex: '\\b' + req.body.q, $options: "gi"}
+        };
+    }
+    Publication.find(option, {}, {
+            sort: {'createdAt': -1},
+            skip: (perPage * page) - perPage,
+            limit: perPage})
+        .populate('owner',{'firstName': 1,'lastName':1})
+        .populate('sector')
+        .exec(function (err, publications) {
+        if (err) {
+            return res.json({
+                status: 0,
+                message: ('Error while getting publications') + err
+            });
+
+        } else {
+            var allPublicationsDetails = []
+            async.forEachOf(publications, function (publication, index, next) {
+               
+                var pubDetails = publication.getPublication()
+                // test if user Connected like || dislike publication
+                if (req.body.userIdConnected){
+                    // parcourir liste des j'aime à partir du résultat détaillée (of findOne)
+                    async.forEachOf(publication.likes, function (like, index, next) {
+                        if (like.user == req.body.userIdConnected){
+                            pubDetails.isLiked = true;
+                        }
+                        next();
+                    })
+                }
+                
+                allPublicationsDetails.push(pubDetails);
+                next();
+            })
+            Publication.find(option).exec(function (err, count) {
+                if (err) {
+                    console.error(err.message)
+                }
+                res.json({
+                    status: 1,
+                    data: {
+                        publications: allPublicationsDetails,
+                        currentPage: page,
+                        Totalpages: Math.ceil(count.length / perPage)
+                    }
+
+                });
+            });
+        }
+    })
+})
+
+//++++++++++++ TIMELINE REQUEST++++++++++++++++++
+
+// get All Publications order by date  with pagination
+router.post('/getAllPublicationsForTimeLine', function (req, res) {
+    try {
+        var perPage = 10, page = 1;
+        if (req.body.perPage !== undefined) {
+            perPage = parseInt(req.body.perPage);
+        }
+        if (req.body.page !== undefined) {
+            page = parseInt(req.body.page);
+        }
+        Publication
+        .find({},{},{
+            sort: {'createdAt': -1},
+            skip: (perPage * page) - perPage,
+            limit: perPage})
+        .populate('owner',{'firstName': 1,'lastName':1})
+        .populate('sector')
+        .exec(function (err, publications) {
+            if (err) {
+                return res.json({
+                    status: 0,
+                    message: ('error get Publication ' + err)
+                });
+            }
+            else {
+                var allPublicationsDetails = []
+                async.forEachOf(publications, function (publication, index, next) {
+                   
+                    var pubDetails = publication.getPublication()
+                    // test if user Connected like || dislike publication
+                    if (req.body.userIdConnected){
+                        // parcourir liste des j'aime à partir du résultat détaillée (of findOne)
+                        async.forEachOf(publication.likes, function (like, index, next) {
+                            if (like.user == req.body.userIdConnected){
+                                pubDetails.isLiked = true;
+                            }
+                            next();
+                        })
+                    }
+                    
+                    allPublicationsDetails.push(pubDetails);
+                    next();
+                })
+                // configs is now a map of JSON data
+                Publication.find().exec(function (err, count) {
+                    res.json({
+                        status: 1,
+                        message: 'get All Publications successfully',
+                        data: {
+                            publications: allPublicationsDetails,
+                            currentPage: page,
+                            Totalpages: Math.ceil(count.length / perPage)
+                        }
+                    });
+                });
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        res.json({
+            status: 0,
+            message: '500 Internal Server Error',
+            data: {}
+        })
+
+    }
+});
 
 module.exports = router;
