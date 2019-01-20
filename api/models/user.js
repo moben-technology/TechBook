@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 var bcrypt = require('bcrypt-nodejs');
-var pathFolder = 'Uploads/images/users/';
+var pathFolder = 'uploads/images/users/';
 const config = require('../config');
 
 const userSchema = new Schema({

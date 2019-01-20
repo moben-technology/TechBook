@@ -12,9 +12,9 @@ var async = require('async');
 var storageFile = multer.diskStorage({
     destination: function (req, file, cb) {
         if (path.extname(file.originalname) == ".mp4"){
-            cb(null, 'Uploads/videos/')
+            cb(null, 'uploads/videos/')
         }else{
-            cb(null, 'Uploads/images/publications/')
+            cb(null, 'ploads/images/publications/')
         }
         
     },
@@ -24,8 +24,8 @@ var storageFile = multer.diskStorage({
 });
 const uploadFile = multer({storage: storageFile});
 
-var pathFolderImagesPublications = 'Uploads/images/publications/';
-var pathFolderVideosPublications = 'Uploads/videos/';
+var pathFolderImagesPublications = 'uploads/images/publications/';
+var pathFolderVideosPublications = 'uploads/videos/';
 
 // add publication
 router.post('/AddPublication',uploadFile.single('file'), function (req, res) {

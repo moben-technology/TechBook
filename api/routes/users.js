@@ -9,7 +9,7 @@ var path = require('path');
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'Uploads/images/users/')
+        cb(null, 'uploads/images/users/')
     },
     filename: function (req, file, cb) {
         cb(null, Date.now() + path.extname(file.originalname)) //Appending extension
@@ -17,7 +17,7 @@ var storage = multer.diskStorage({
 });
 
 const upload = multer({storage: storage});
-var pathFolder = 'Uploads/images/users/';
+var pathFolder = 'uploads/images/users/';
 
 // signup
 router.post('/signUp', function (req, res) {

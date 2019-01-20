@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 const config = require('../config');
 const Comment = require('./comment').commentSchema;
 const Like = require('./like').likeSchema;
-var pathFolderImagesPublications = 'Uploads/images/publications/';
-var pathFolderVideosPublications = 'Uploads/videos/';
+var pathFolderImagesPublications = 'uploads/images/publications/';
+var pathFolderVideosPublications = 'uploads/videos/';
 
 const publicationSchema = new Schema({
     title: {
@@ -65,17 +65,6 @@ publicationSchema.methods.getPublication=function () {
 };
 
 publicationSchema.methods.getPublicationDetails=function () {
-    var  owner;
-    if (  this.owner !== undefined && this.owner !== null){
-        if(this.owner._id) {
-            //owner = this.owner.Schema;
-            //owner = "hh";
-        }else{
-            owner = this.owner;
-        }
-    }else{
-        owner = this.owner
-    }
     return({
         _id: this._id,
         title: this.title,
@@ -84,7 +73,7 @@ publicationSchema.methods.getPublicationDetails=function () {
         name_file: this.name_file,
         url_file: this.url_file,
         sector: this.sector,
-        owner: owner,
+        owner: this.owner,
         createdAt: this.createdAt,
     })
 };
