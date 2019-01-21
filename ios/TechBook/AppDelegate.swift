@@ -16,6 +16,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // use IQKeyboardManager
+        IQKeyboardManager.shared.enable = true
+        IQKeyboardManager.shared.enableAutoToolbar = true
         
         //Controle of Session
         let userStaut = self.defaults.bool(forKey: "userStatut")
@@ -33,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         }else {
             // User Connected
-            initialViewController = storyboard.instantiateViewController(withIdentifier: "HomeViewController")
+            initialViewController = storyboard.instantiateViewController(withIdentifier: "AppTabBar")
             
         }
         

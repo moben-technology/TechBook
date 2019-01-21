@@ -179,6 +179,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8HV-dW-3Qy">
+                                <rect key="frame" x="209" y="64" width="150" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wn-Om-vbi">
                                 <rect key="frame" x="166" y="323" width="54" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -190,7 +195,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="s1K-OU-K5X"/>
                     </view>
-                    <navigationItem key="navigationItem" id="0BK-Md-duT"/>
+                    <navigationItem key="navigationItem" id="0BK-Md-duT">
+                        <barButtonItem key="rightBarButtonItem" image="icon_menu" id="RJl-cf-OeT">
+                            <connections>
+                                <action selector="dropDownBtnAction:" destination="EvU-IB-P3C" id="Shd-G7-Wb1"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dropDownView" destination="8HV-dW-3Qy" id="fV6-JP-4aR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUV-Xb-1Vz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -204,6 +218,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-w1-9sq">
+                                <rect key="frame" x="209" y="64" width="150" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbF-xy-J2j">
                                 <rect key="frame" x="166" y="323" width="65" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -215,11 +234,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="O5M-oN-d7l"/>
                     </view>
-                    <navigationItem key="navigationItem" id="Qz3-Fl-OCg"/>
+                    <navigationItem key="navigationItem" id="Qz3-Fl-OCg">
+                        <barButtonItem key="rightBarButtonItem" image="icon_menu" id="Onf-lS-dQS">
+                            <connections>
+                                <action selector="dropDownBtnAction:" destination="wZH-1d-68F" id="GuK-zw-IcR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dropDownView" destination="xUW-w1-9sq" id="wzq-Q5-VWa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f01-dR-7Jh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="457"/>
+            <point key="canvasLocation" x="5124" y="456.52173913043481"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="lco-Vd-cgA">
@@ -229,6 +257,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Epy-WR-Wgf">
+                                <rect key="frame" x="209" y="64" width="150" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MX7-l5-e5z">
                                 <rect key="frame" x="166" y="323" width="49" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -240,11 +273,20 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="IJD-2l-BFP"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xWj-zQ-3Kj"/>
+                    <navigationItem key="navigationItem" id="xWj-zQ-3Kj">
+                        <barButtonItem key="rightBarButtonItem" image="icon_menu" id="JYG-rn-Zyo">
+                            <connections>
+                                <action selector="dropDownBtnAction:" destination="skd-DQ-moo" id="djh-kV-msn"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dropDownView" destination="Epy-WR-Wgf" id="SzD-Wu-IHl"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZF-ar-05z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="1415"/>
+            <point key="canvasLocation" x="5124" y="1414.5427286356824"/>
         </scene>
         <!--Home View Controller-->
         <scene sceneID="t1D-Dl-MdL">
@@ -261,28 +303,34 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bou-9u-5Wd">
-                                <rect key="frame" x="163" y="148" width="48" height="30"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5kD-yA-SbX">
+                                <rect key="frame" x="209" y="64" width="150" height="0.0"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Logout"/>
-                                <connections>
-                                    <action selector="btnLogoutAction:" destination="9e1-YC-lnd" eventType="touchUpInside" id="HQn-uZ-Cd4"/>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="QPh-gd-Bmn"/>
                     </view>
-                    <navigationItem key="navigationItem" id="eiK-cR-HMR"/>
+                    <navigationItem key="navigationItem" id="eiK-cR-HMR">
+                        <barButtonItem key="rightBarButtonItem" image="icon_menu" id="YFw-n5-9z4">
+                            <connections>
+                                <action selector="dropDownBtnAction:" destination="9e1-YC-lnd" id="sfJ-MG-kLM"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="dropDownView" destination="5kD-yA-SbX" id="0mA-Ja-gLU"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GOz-50-wah" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="-1316"/>
+            <point key="canvasLocation" x="5124" y="-1316.4917541229386"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--App Tab Bar-->
         <scene sceneID="Gcm-nL-IrU">
             <objects>
-                <tabBarController id="0Nh-aj-tvr" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="AppTabBar" id="0Nh-aj-tvr" customClass="AppTabBar" customModule="TechBook" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="D5I-aC-4mB">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -303,7 +351,7 @@
         <scene sceneID="EPD-Cd-q75">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JFJ-Ra-9Oi" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" id="ayS-TT-f8x"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="ic_home_gray" selectedImage="ic_home_gray" id="ayS-TT-f8x"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1oD-az-1aF">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -318,11 +366,11 @@
             </objects>
             <point key="canvasLocation" x="4185" y="-1316"/>
         </scene>
-        <!--Search-->
+        <!--Navigation Controller-->
         <scene sceneID="Ax0-r6-dBl">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Tvz-WJ-i2i" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Search" id="zc2-4s-BqC"/>
+                    <tabBarItem key="tabBarItem" systemItem="search" id="zc2-4s-BqC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="nyq-Gz-ZBf">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -341,7 +389,7 @@
         <scene sceneID="7HL-BN-agh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AqQ-H5-Kwh" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Add pub" id="HN7-OS-FP0"/>
+                    <tabBarItem key="tabBarItem" title="Add pub" image="ic_add_gray" selectedImage="ic_add_gray" id="HN7-OS-FP0"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="H3e-GP-V5L">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -360,7 +408,7 @@
         <scene sceneID="6Od-51-TAR">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="JoP-Im-B4n" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Profile" id="kfU-XY-GVT"/>
+                    <tabBarItem key="tabBarItem" title="Profile" image="ic_person_gray" selectedImage="ic_person_gray" id="kfU-XY-GVT"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="odQ-DP-sMB">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -376,6 +424,12 @@
             <point key="canvasLocation" x="4185" y="1415"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ic_add_gray" width="36" height="36"/>
+        <image name="ic_home_gray" width="36" height="36"/>
+        <image name="ic_person_gray" width="36" height="36"/>
+        <image name="icon_menu" width="3" height="15"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lBa-UZ-yMl"/>
     </inferredMetricsTieBreakers>

@@ -17,4 +17,6 @@ target 'TechBook' do
     # Pods for testing
   end
 pod 'Alamofire'
+pod 'SDWebImage'
+pod 'DropDown'
 end
