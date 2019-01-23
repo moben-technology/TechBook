@@ -15,8 +15,15 @@ class Constants {
     
     static let signInViaEmail = baseUrl + "users/signIn"
     static let signUpViaEmail = baseUrl + "users/signUp"
+    static let getTimeLine = baseUrl + "publications/getAllPublicationsForTimeLine"
+    static let likePublication = baseUrl + "publications/addLikeToPublication"
+    static let dislikePublication = baseUrl + "publications/dislikePublication"
+    static let getComments = baseUrl + "publications/getCommentsByPublication"
+    static let deleteComment = baseUrl + "publications/deleteComment"
+    static let addComment = baseUrl + "publications/addComment"
     
     
+    static let perPageForListing: Int = 10
 }
 
 extension UIColor {

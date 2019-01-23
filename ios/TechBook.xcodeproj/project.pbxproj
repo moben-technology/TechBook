@@ -29,11 +29,16 @@
 		FA0B4FE321F5C93300047A9C /* IQUIView+Hierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B4FD221F5C93300047A9C /* IQUIView+Hierarchy.swift */; };
 		FA0B4FE421F5C93300047A9C /* IQNSArray+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B4FD321F5C93300047A9C /* IQNSArray+Sort.swift */; };
 		FA0B4FE621F5CAC800047A9C /* AppTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0B4FE521F5CAC800047A9C /* AppTabBar.swift */; };
+		FA0FA78921F7A2A900497644 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA78821F7A2A900497644 /* CardView.swift */; };
+		FA0FA78D21F7A36A00497644 /* PublicationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA78B21F7A36A00497644 /* PublicationTableViewCell.swift */; };
+		FA0FA78E21F7A36A00497644 /* PublicationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0FA78C21F7A36A00497644 /* PublicationTableViewCell.xib */; };
 		FA23F3FE21F6648100F6F19F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F3FD21F6648100F6F19F /* User.swift */; };
 		FA23F40021F6765800F6F19F /* Publication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F3FF21F6765800F6F19F /* Publication.swift */; };
 		FA23F40221F6791A00F6F19F /* Sector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40121F6791A00F6F19F /* Sector.swift */; };
 		FA23F40421F67B1500F6F19F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40321F67B1500F6F19F /* Comment.swift */; };
 		FA23F40621F67C4900F6F19F /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40521F67C4900F6F19F /* Like.swift */; };
+		FA9C35DB21F8FB140033F6E1 /* ListCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */; };
+		FA9C35DD21F906BC0033F6E1 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C35DC21F906BC0033F6E1 /* CommentTableViewCell.swift */; };
 		FACC06D421F3C75400AFC836 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACC06D321F3C75400AFC836 /* HomeViewController.swift */; };
 		FACC06D621F3CBF900AFC836 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACC06D521F3CBF900AFC836 /* SearchViewController.swift */; };
 		FACC06D821F3CD6400AFC836 /* AddPublicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACC06D721F3CD6400AFC836 /* AddPublicationViewController.swift */; };
@@ -95,11 +100,16 @@
 		FA0B4FD221F5C93300047A9C /* IQUIView+Hierarchy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQUIView+Hierarchy.swift"; sourceTree = "<group>"; };
 		FA0B4FD321F5C93300047A9C /* IQNSArray+Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "IQNSArray+Sort.swift"; sourceTree = "<group>"; };
 		FA0B4FE521F5CAC800047A9C /* AppTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabBar.swift; sourceTree = "<group>"; };
+		FA0FA78821F7A2A900497644 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		FA0FA78B21F7A36A00497644 /* PublicationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationTableViewCell.swift; sourceTree = "<group>"; };
+		FA0FA78C21F7A36A00497644 /* PublicationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublicationTableViewCell.xib; sourceTree = "<group>"; };
 		FA23F3FD21F6648100F6F19F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FA23F3FF21F6765800F6F19F /* Publication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publication.swift; sourceTree = "<group>"; };
 		FA23F40121F6791A00F6F19F /* Sector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sector.swift; sourceTree = "<group>"; };
 		FA23F40321F67B1500F6F19F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FA23F40521F67C4900F6F19F /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommentsViewController.swift; sourceTree = "<group>"; };
+		FA9C35DC21F906BC0033F6E1 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		FACC06D321F3C75400AFC836 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		FACC06D521F3CBF900AFC836 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		FACC06D721F3CD6400AFC836 /* AddPublicationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPublicationViewController.swift; sourceTree = "<group>"; };
@@ -231,6 +241,7 @@
 			isa = PBXGroup;
 			children = (
 				FA0B4FBC21F5C93300047A9C /* IQKeyboardManagerSwift */,
+				FA0FA78821F7A2A900497644 /* CardView.swift */,
 			);
 			path = "Custom component";
 			sourceTree = "<group>";
@@ -300,6 +311,24 @@
 			path = Categories;
 			sourceTree = "<group>";
 		};
+		FA0FA78A21F7A31300497644 /* Custom Cells */ = {
+			isa = PBXGroup;
+			children = (
+				FA0FA78B21F7A36A00497644 /* PublicationTableViewCell.swift */,
+				FA0FA78C21F7A36A00497644 /* PublicationTableViewCell.xib */,
+			);
+			path = "Custom Cells";
+			sourceTree = "<group>";
+		};
+		FA9C35D921F8FABE0033F6E1 /* ListComments */ = {
+			isa = PBXGroup;
+			children = (
+				FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */,
+				FA9C35DC21F906BC0033F6E1 /* CommentTableViewCell.swift */,
+			);
+			path = ListComments;
+			sourceTree = "<group>";
+		};
 		FAE5A52821F366EE007A8EA9 = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +356,7 @@
 			children = (
 				FAE5A56621F36850007A8EA9 /* Models */,
 				FAE5A56221F36806007A8EA9 /* Controllers */,
+				FA0FA78A21F7A31300497644 /* Custom Cells */,
 				FA0B4FB721F5C6FA00047A9C /* Custom component */,
 				FA0B4FB821F5C7BC00047A9C /* Constants.swift */,
 				FAE5A53421F366EE007A8EA9 /* AppDelegate.swift */,
@@ -366,6 +396,7 @@
 				FA02EC9921F5D0D80093A820 /* Search */,
 				FA02EC9A21F5D0E40093A820 /* Add Publication */,
 				FA02EC9B21F5D0F10093A820 /* Profile */,
+				FA9C35D921F8FABE0033F6E1 /* ListComments */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -493,6 +524,7 @@
 				FAE5A53F21F366F0007A8EA9 /* LaunchScreen.storyboard in Resources */,
 				FAE5A53C21F366F0007A8EA9 /* Assets.xcassets in Resources */,
 				FA0B4FDD21F5C93300047A9C /* IQKeyboardManager.bundle in Resources */,
+				FA0FA78E21F7A36A00497644 /* PublicationTableViewCell.xib in Resources */,
 				FAE5A53A21F366EE007A8EA9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +654,7 @@
 				FA0B4FDB21F5C93300047A9C /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				FA0B4FD421F5C93300047A9C /* IQTextView.swift in Sources */,
 				FA0B4FD621F5C93300047A9C /* IQTitleBarButtonItem.swift in Sources */,
+				FA0FA78921F7A2A900497644 /* CardView.swift in Sources */,
 				FA0B4FE321F5C93300047A9C /* IQUIView+Hierarchy.swift in Sources */,
 				FAE5A53521F366EE007A8EA9 /* AppDelegate.swift in Sources */,
 				FA23F40421F67B1500F6F19F /* Comment.swift in Sources */,
@@ -633,7 +666,10 @@
 				FA0B4FDC21F5C93300047A9C /* IQKeyboardManagerConstants.swift in Sources */,
 				FA0B4FE021F5C93300047A9C /* IQUIScrollView+Additions.swift in Sources */,
 				FA0B4FDA21F5C93300047A9C /* IQInvocation.swift in Sources */,
+				FA9C35DB21F8FB140033F6E1 /* ListCommentsViewController.swift in Sources */,
 				FA0B4FE221F5C93300047A9C /* IQUITextFieldView+Additions.swift in Sources */,
+				FA9C35DD21F906BC0033F6E1 /* CommentTableViewCell.swift in Sources */,
+				FA0FA78D21F7A36A00497644 /* PublicationTableViewCell.swift in Sources */,
 				FA0B4FD521F5C93300047A9C /* IQPreviousNextView.swift in Sources */,
 				FAE5A56A21F36E7C007A8EA9 /* SignInViewController.swift in Sources */,
 				FA0B4FE421F5C93300047A9C /* IQNSArray+Sort.swift in Sources */,
@@ -821,6 +857,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YJXTYGC4LF;
 				INFOPLIST_FILE = TechBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -840,6 +877,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YJXTYGC4LF;
 				INFOPLIST_FILE = TechBook/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

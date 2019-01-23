@@ -26,6 +26,11 @@ class ProfileViewController: UIViewController {
     
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     //dropDownBtnAction
     @IBAction func dropDownBtnAction(_ sender: Any) {
         dropDownStatus.show()
