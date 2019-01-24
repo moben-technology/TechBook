@@ -176,6 +176,30 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
 
 
 extension HomeViewController : PublicationTableViewCellDelegate {
+    func didLabelNbrLikesTapped(idPublication: String, nbrLikes: Int,cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        if (nbrLikes > 0){
+            let popOverListLikesViewController = storyboard?.instantiateViewController(withIdentifier: "ListLikesViewController") as! ListLikesViewController
+            popOverListLikesViewController.idPublication = idPublication
+            popOverListLikesViewController.modalPresentationStyle = .popover
+            present(popOverListLikesViewController, animated: true, completion: nil)
+
+        }
+    }
+    
+    func didLabelNameOwnerPubTapped(idOwnerPub: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        // send data to desCV
+        desVC.idUserReceived = idOwnerPub
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+    }
+    
+    func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        print("name Sector: ", sector.nameSector! as String)
+    }
+    
     func didBtnLikeClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         if (publication.isLiked!){
             // dislike pub
@@ -279,6 +303,5 @@ extension HomeViewController : PublicationTableViewCellDelegate {
         self.navigationController?.pushViewController(desVC, animated: true)
         
     }
-    
     
 }

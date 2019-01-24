@@ -61,15 +61,14 @@ class Publication: NSObject {
             self.sector = Sector(_sector as! [String : Any])
         }
         if let _createdAt = dic["createdAt"] as! String? {
-            // parse date of date of creation
+            // parse date
             let formatterParse = DateFormatter()
             formatterParse.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             let parsedDate = formatterParse.date(from: _createdAt)
             //get date and month
             let formatterDate = DateFormatter()
             formatterDate.dateStyle = .long
-            formatterDate.timeStyle = .none
-            formatterDate.dateFormat = "yyyy-MM-dd"
+            formatterDate.timeStyle = .short
             let newFormatDate = formatterDate.string(from: parsedDate!)
             self.createdAt = newFormatDate
         }

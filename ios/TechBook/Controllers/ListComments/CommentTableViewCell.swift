@@ -10,6 +10,7 @@ import UIKit
 
 protocol CommentTableViewCellDelegate : class {
     func didBtnDeleteCommentClicked(comment: Comment, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
+    func didLabelNameAuthorCommentTapped(idAuthorComment: String, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
 }
 
 class CommentTableViewCell: UITableViewCell {
@@ -39,6 +40,10 @@ class CommentTableViewCell: UITableViewCell {
         self.textComment.text = comment.text
         self.dateComment.text = comment.date
         
+        let tapNameAuthorLabel = UITapGestureRecognizer(target: self, action: #selector(CommentTableViewCell.showProfileOwnerPub))
+        nameAuthor.isUserInteractionEnabled = true
+        nameAuthor.addGestureRecognizer(tapNameAuthorLabel)
+        
     }
     
     override func awakeFromNib() {
@@ -55,6 +60,12 @@ class CommentTableViewCell: UITableViewCell {
     @IBAction func btnDeleteCommentAction(_ sender: Any) {
         delegateComment?.didBtnDeleteCommentClicked(comment: (self.comment)!, cell: self, indexPathCell: self.indexPathCell!, tableView: self.tableView!)
     }
+    
+    @objc func showProfileOwnerPub() {
+        delegateComment?.didLabelNameAuthorCommentTapped(idAuthorComment: (self.comment?.author._id)!, cell: self, indexPathCell: self.indexPathCell!, tableView: self.tableView!)
+    }
+    
+    
     
 
 }

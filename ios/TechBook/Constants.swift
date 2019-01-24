@@ -21,6 +21,9 @@ class Constants {
     static let getComments = baseUrl + "publications/getCommentsByPublication"
     static let deleteComment = baseUrl + "publications/deleteComment"
     static let addComment = baseUrl + "publications/addComment"
+    static let getLikesByPublication = baseUrl + "publications/getListLikesByPublication"
+    static let getUserById = baseUrl + "users/getUserById"
+    
     
     
     static let perPageForListing: Int = 10
@@ -55,6 +58,20 @@ extension String {
         return regex?.firstMatch(in: self, options: [], range: NSMakeRange(0, self.count)) != nil
     }
     
+}
+
+class UnderlinedLabel: UILabel {
+    
+    override var text: String? {
+        didSet {
+            guard let text = text else { return }
+            let textRange = NSMakeRange(0, text.count)
+            let attributedText = NSMutableAttributedString(string: text)
+            attributedText.addAttribute(NSAttributedString.Key.underlineStyle , value: NSUnderlineStyle.single.rawValue, range: textRange)
+            // Add other attributes if needed
+            self.attributedText = attributedText
+        }
+    }
 }
 
 

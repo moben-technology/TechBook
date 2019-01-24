@@ -26,15 +26,14 @@ class Like: NSObject {
             self.user = User(_author as! [String : Any])
         }
         if let _date = dic["date"] as! String? {
-            // parse date of date of creation
+            // parse date
             let formatterParse = DateFormatter()
             formatterParse.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
             let parsedDate = formatterParse.date(from: _date)
             //get date and month
             let formatterDate = DateFormatter()
             formatterDate.dateStyle = .long
-            formatterDate.timeStyle = .none
-            formatterDate.dateFormat = "yyyy-MM-dd"
+            formatterDate.timeStyle = .short
             let newFormatDate = formatterDate.string(from: parsedDate!)
             self.date = newFormatDate
         }

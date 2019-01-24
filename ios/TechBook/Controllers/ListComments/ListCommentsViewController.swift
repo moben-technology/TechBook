@@ -241,6 +241,17 @@ extension ListCommentsViewController: UITableViewDelegate,UITableViewDataSource 
 }
 
 extension ListCommentsViewController : CommentTableViewCellDelegate {
+    func didLabelNameAuthorCommentTapped(idAuthorComment: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        //print("idAuthorComment: ",idAuthorComment)
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        // send data to desCV
+        desVC.idUserReceived = idAuthorComment
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+    }
+    
     
     func didBtnDeleteCommentClicked(comment: Comment, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         // show alerte
