@@ -29,6 +29,18 @@ class ListLikesViewController: UIViewController {
 
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Hide the navigation bar for current view controller
+        self.navigationController?.isNavigationBarHidden = true;
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Show the navigation bar on other view controllers
+        self.navigationController?.isNavigationBarHidden = false;
+    }
+    
     func getLikes(pageNumber:Int){
         let postParameters = [
             "publicationId": self.idPublication,
@@ -129,9 +141,9 @@ extension ListLikesViewController : LikeTableViewCellDelegate {
         let desVC = MainStory.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
         // send data to desCV
         desVC.idUserReceived = idUser
-         self.present(desVC, animated: true, completion: nil)
         // push navigationController
-        //self.navigationController?.pushViewController(desVC, animated: true)
+        self.navigationController?.pushViewController(desVC, animated: true)
+        
     }
     
     

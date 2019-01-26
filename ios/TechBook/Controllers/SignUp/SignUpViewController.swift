@@ -90,7 +90,7 @@ class SignUpViewController: UIViewController {
                 "age": ageTxtField.text!,
                 "gender": genderTxtField.text!,
                 ] as [String : Any]
-            //print("postParameters in signUpViaEmail",postParameters)
+            print("postParameters in signUpViaEmail",postParameters)
             Alamofire.request(Constants.signUpViaEmail, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
                 response in
                 switch response.result {
@@ -101,7 +101,7 @@ class SignUpViewController: UIViewController {
                         print(response.result.error!)
                         return
                     }
-                    
+
                     // make sure we got some JSON since that's what we expect
                     guard let json = response.result.value as? [String: Any] else {
                         print("didn't get object as JSON from URL")
@@ -110,7 +110,7 @@ class SignUpViewController: UIViewController {
                         }
                         return
                     }
-                    
+
                     //print("response from server of signUpViaEmail : ",json)
                     let responseServer = json["status"] as? NSNumber
                     if responseServer == 1{
@@ -128,11 +128,11 @@ class SignUpViewController: UIViewController {
                                 self.defaults.synchronize()
                                 // navigate to HomePage
                                 self.performSegue(withIdentifier: "ShowHomeViaSignUp", sender: self)
-                                                                
+
                             }
-                            
+
                         }
-                        
+
                     }
                     break
                     

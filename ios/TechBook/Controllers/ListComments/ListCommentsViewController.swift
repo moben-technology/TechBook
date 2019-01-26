@@ -83,6 +83,7 @@ class ListCommentsViewController: UIViewController {
                             self.totalNbrPages = nbrTotalOfPages
                         }
                         self.currentPageNumber += 1
+                        self.publication.nbrComments = self.arrayComments.count
                         // refresh tableView
                         self.commentsTableView.reloadData()
                     }
@@ -133,6 +134,9 @@ class ListCommentsViewController: UIViewController {
                     self.commentsTableView.reloadData()
                     // show toast
                     self.showToast(message: json["message"] as! String)
+                    // increase nbr comments of the pub
+                    self.publication.nbrComments = self.arrayComments.count
+
                     
                 }
                 
@@ -187,7 +191,10 @@ class ListCommentsViewController: UIViewController {
                     //print("response from server of addComment : ",json)
                     let responseServer = json["status"] as? NSNumber
                     if responseServer == 1{
+                        self.publication.nbrComments = self.arrayComments.count + 1
                         self.showToast(message: json["message"] as! String)
+                        //let desVC = self.navigationController?.viewControllers[0] as! HomeViewController
+                       // desVC.publicationUpdated = self.publication
                         self.navigationController?.popViewController(animated: true)
                     }
                     

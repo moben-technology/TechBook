@@ -19,6 +19,10 @@ class ProfileViewController: UIViewController {
     var idUserReceived = String()
     var userConnected = User()
     var currentUser = User()
+    var arrayPublications: [Publication] = []
+    var currentPageNumber: Int = 1
+    var totalNbrPages: Int = 1
+    
     @IBOutlet weak var dropDownView: UIView!
     @IBOutlet weak var imageProfileUser: UIImageView!
     @IBOutlet weak var fullNameLabel: UILabel!
@@ -26,6 +30,9 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var genderLabel: UILabel!
     @IBOutlet weak var ageLabel: UILabel!
     @IBOutlet weak var dateSignUpLabel: UILabel!
+    @IBOutlet weak var publicationsTableView: UITableView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var viewNoPubAdded: CardView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +41,12 @@ class ProfileViewController: UIViewController {
 
         self.imageProfileUser.layer.cornerRadius = self.imageProfileUser.frame.size.width/2
         self.imageProfileUser.clipsToBounds = true
+        
+        // prepare nibCell of TableView
+        let nibCell = UINib(nibName: "PublicationTableViewCell", bundle: nil)
+        self.publicationsTableView.register(nibCell, forCellReuseIdentifier: "PublicationTableViewCell")
+        // remove extra empty cells
+        self.publicationsTableView.tableFooterView = UIView()
     
     }
     
@@ -43,7 +56,7 @@ class ProfileViewController: UIViewController {
         // get user data from UserDefaults
         let objectUser = self.defaults.dictionary(forKey: "objectUser")
         self.userConnected = User(objectUser!)
-        //profile to show: user connected so get data of user from UserDefaults
+        //profile to show: is the user connected so get data of user from UserDefaults
         if (idUserReceived == "" || idUserReceived == self.userConnected._id) {
             print("get user from UserDefaults")
             self.currentUser = self.userConnected
@@ -53,6 +66,7 @@ class ProfileViewController: UIViewController {
             print("get user from server")
             getUserById()
         }
+
         
     }
     
@@ -103,21 +117,133 @@ class ProfileViewController: UIViewController {
         }
         
     }
-//    @IBOutlet weak var imageProfileUser: UIImageView!
-//    @IBOutlet weak var fullNameLabel: UILabel!
-//    @IBOutlet weak var emailLabel: UILabel!
-//    @IBOutlet weak var genderLabel: UILabel!
-//    @IBOutlet weak var ageLabel: UILabel!
-//    @IBOutlet weak var dateSignUpLabel: UILabel!
+    
     // setup View
     func setUpView(){
+        print("self.currentUser.pictureProfile",self.currentUser.pictureProfile)
+        print("id id id ",self.currentUser._id)
+        
         self.imageProfileUser.sd_setImage(with: URL(string: self.currentUser.pictureProfile!))
         self.fullNameLabel.text = self.currentUser.firstName! + " " + self.currentUser.lastName!
         self.emailLabel.text = self.currentUser.email!
         self.genderLabel.text = self.currentUser.gender!
         self.ageLabel.text = self.currentUser.age!
         self.dateSignUpLabel.text = self.currentUser.createdAt!
+        self.getPublicationsByUser(pageNumber:self.currentPageNumber)
 
+    }
+    
+    func getPublicationsByUser(pageNumber:Int){
+        let postParameters = [
+            "ownerId": self.currentUser._id!,
+            "userIdConnected":self.userConnected._id!,
+            "perPage": Constants.perPageForListing,
+            "page": pageNumber,
+            ] as [String : Any]
+        //print("postParameters in getPublicationsByUser",postParameters)
+        Alamofire.request(Constants.getPublicationsByUser, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
+            response in
+            switch response.result {
+            case .success:
+                guard response.result.error == nil else {
+                    // got an error in getting the data, need to handle it
+                    print("error calling POST")
+                    print(response.result.error!)
+                    return
+                }
+                
+                // make sure we got some JSON since that's what we expect
+                guard let json = response.result.value as? [String: Any] else {
+                    print("didn't get object as JSON from URL")
+                    if let error = response.result.error {
+                        print("Error: \(error)")
+                    }
+                    return
+                }
+                
+                //print("response from server of getPublicationsByUser : ",json)
+                let responseServer = json["status"] as? NSNumber
+                if responseServer == 1{
+                    if  let data = json["data"] as? [String:Any]{
+                        if  let listePublicationsData = data["publications"] as? [[String : Any]]{
+                            for publicationDic in listePublicationsData {
+                                let pub = Publication(publicationDic)
+                                self.arrayPublications.append(pub)
+                            }
+                            
+                        }
+                        if let nbrTotalOfPages = data["Totalpages"] as? Int{
+                            self.totalNbrPages = nbrTotalOfPages
+                        }
+                        self.currentPageNumber += 1
+                        // refresh tableView
+                        self.publicationsTableView.reloadData()
+                        if (self.arrayPublications.count == 0){
+                            self.scrollView.contentSize.height = 1.0 // disable vertical scroll
+                            self.viewNoPubAdded.isHidden = false
+                        }else{
+                            self.viewNoPubAdded.isHidden = true
+                        }
+                    }
+                }
+                break
+                
+            case .failure(let error):
+                print("error from server : ",error)
+                break
+                
+            }
+            
+        }
+        
+    }
+    
+    func deletePublication(publication: Publication, indexPathCell : Int){
+        let postParameters = [
+            "publicationId": publication._id!,
+            ] as [String : Any]
+        //print("postParameters deletePublicationById : ",postParameters)
+        Alamofire.request(Constants.deletePublicationById, method: .post, parameters: postParameters,encoding: JSONEncoding.default).responseJSON {
+            response in
+            switch response.result {
+            case .success:
+                guard response.result.error == nil else {
+                    // got an error in getting the data, need to handle it
+                    print("error calling POST")
+                    print(response.result.error!)
+                    return
+                }
+                
+                // make sure we got some JSON since that's what we expect
+                guard let json = response.result.value as? [String: Any] else {
+                    print("didn't get object as JSON from URL")
+                    if let error = response.result.error {
+                        print("Error: \(error)")
+                    }
+                    return
+                }
+                
+                print("response from server of deletePublicationById : ",json)
+                let responseServer = json["status"] as? NSNumber
+                if responseServer == 1{
+                    // remove publication from arrayPublications
+                    self.arrayPublications.remove(at: indexPathCell)
+                    // reload timeLineTableView
+                    self.publicationsTableView.reloadData()
+                    // show toast
+                    self.showToast(message: json["message"] as! String)
+                    
+                }
+                
+                break
+            case .failure(let error):
+                print("error from server : ",error)
+                break
+                
+            }
+            
+        }
+        
     }
     
     //dropDownBtnAction
@@ -157,3 +283,223 @@ class ProfileViewController: UIViewController {
     
 
 }
+
+
+extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        return 460.0
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.arrayPublications.count
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PublicationTableViewCell", for: indexPath) as! PublicationTableViewCell
+        if(arrayPublications[indexPath.row].owner._id == self.userConnected._id) {
+            cell.btnDeletePubOutlet.isHidden = false
+        }else{
+            cell.btnDeletePubOutlet.isHidden = true
+            
+        }
+        cell.loadData(publication: arrayPublications[indexPath.row], indexPathCell: indexPath, tableView: tableView)
+        cell.delegatePublication = self // lisener to action btn
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // for pagination
+        if indexPath.row == arrayPublications.count - 1 && (self.totalNbrPages >= self.currentPageNumber) {
+            getPublicationsByUser(pageNumber: self.currentPageNumber)
+        }
+    }
+    
+}
+
+extension ProfileViewController : PublicationTableViewCellDelegate {
+    func didBtnDeletePubClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        // show alerte
+        let alert = UIAlertController(title: "Attention",message: "You are sure to delete your publication?" ,preferredStyle: .alert)
+        // YES button
+        let btnYes = UIAlertAction(title: "YES", style: .default, handler: { (action) -> Void in
+            self.deletePublication(publication: publication, indexPathCell : indexPathCell.row)
+        })
+        
+        // NO button
+        let btnNo = UIAlertAction(title: "NO", style: .destructive, handler: { (action) -> Void in
+            
+        })
+        alert.addAction(btnNo)
+        alert.addAction(btnYes)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func didLabelNameOwnerPubTapped(idOwnerPub: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        print("didLabelNameOwnerPubTapped")
+    }
+    
+    
+    func didLabelNbrLikesTapped(idPublication: String, nbrLikes: Int,cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        if (nbrLikes > 0){
+            let popOverListLikesViewController = storyboard?.instantiateViewController(withIdentifier: "ListLikesViewController") as! ListLikesViewController
+            popOverListLikesViewController.idPublication = idPublication
+            // show popOver with navigation Bar to enable push to profile with back to popOver
+            let navc = UINavigationController(rootViewController: popOverListLikesViewController)
+            self.present(navc, animated: true, completion: nil)
+            
+        }
+        
+    }
+    
+    func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        print("name Sector: ", sector.nameSector! as String)
+    }
+    
+    func didBtnLikeClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        if (publication.isLiked!){
+            // dislike pub
+            let postParameters = [
+                "userId":self.userConnected._id!,
+                "publicationId": publication._id!,
+                ] as [String : Any]
+            //print("postParameters in dislikePublication",postParameters)
+            Alamofire.request(Constants.dislikePublication, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
+                response in
+                switch response.result {
+                case .success:
+                    guard response.result.error == nil else {
+                        // got an error in getting the data, need to handle it
+                        print("error calling POST")
+                        print(response.result.error!)
+                        return
+                    }
+                    
+                    // make sure we got some JSON since that's what we expect
+                    guard let json = response.result.value as? [String: Any] else {
+                        print("didn't get object as JSON from URL")
+                        if let error = response.result.error {
+                            print("Error: \(error)")
+                        }
+                        return
+                    }
+                    
+                    print("response from server of dislikePublication : ",json)
+                    let responseServer = json["status"] as? NSNumber
+                    if responseServer == 1{
+                        let publicationCell = cell as! PublicationTableViewCell
+                        publication.isLiked = false
+                        publication.nbrLikes = publication.nbrLikes! - 1
+                        publicationCell.updateDetailsPub(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
+                    }
+                    break
+                    
+                case .failure(let error):
+                    print("error from server : ",error)
+                    break
+                    
+                }
+                
+            }
+        }else{
+            // like pub
+            let postParameters = [
+                "userId":self.userConnected._id!,
+                "publicationId": publication._id!,
+                ] as [String : Any]
+            //print("postParameters in likePublication",postParameters)
+            Alamofire.request(Constants.likePublication, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
+                response in
+                switch response.result {
+                case .success:
+                    guard response.result.error == nil else {
+                        // got an error in getting the data, need to handle it
+                        print("error calling POST")
+                        print(response.result.error!)
+                        return
+                    }
+                    
+                    // make sure we got some JSON since that's what we expect
+                    guard let json = response.result.value as? [String: Any] else {
+                        print("didn't get object as JSON from URL")
+                        if let error = response.result.error {
+                            print("Error: \(error)")
+                        }
+                        return
+                    }
+                    
+                    print("response from server of likePublication : ",json)
+                    let responseServer = json["status"] as? NSNumber
+                    if responseServer == 1{
+                        let publicationCell = cell as! PublicationTableViewCell
+                        publication.isLiked = true
+                        publication.nbrLikes = publication.nbrLikes! + 1
+                        publicationCell.updateDetailsPub(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
+                        
+                    }
+                    break
+                    
+                case .failure(let error):
+                    print("error from server : ",error)
+                    break
+                    
+                }
+                
+            }
+        }
+    }
+    
+    func didBtnGetCommentsClicked(_id: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "ListCommentsViewController") as! ListCommentsViewController
+        
+        desVC.publication = arrayPublications[indexPathCell.row]
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+        
+    }
+    
+}
+
+// show toast
+extension ProfileViewController {
+    func showToast(message: String) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        let toastLbl = UILabel()
+        toastLbl.text = message
+        toastLbl.textAlignment = .center
+        toastLbl.font = UIFont.systemFont(ofSize: 18)
+        toastLbl.textColor = UIColor.white
+        toastLbl.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLbl.numberOfLines = 0
+        
+        
+        let textSize = toastLbl.intrinsicContentSize
+        let labelHeight = ( textSize.width / window.frame.width ) * 30
+        let labelWidth = min(textSize.width, window.frame.width - 40)
+        let adjustedHeight = max(labelHeight, textSize.height + 20)
+        
+        toastLbl.frame = CGRect(x: 20, y: (window.frame.height - 90 ) - adjustedHeight, width: labelWidth + 20, height: adjustedHeight)
+        toastLbl.center.x = window.center.x
+        toastLbl.layer.cornerRadius = 10
+        toastLbl.layer.masksToBounds = true
+        
+        window.addSubview(toastLbl)
+        
+        UIView.animate(withDuration: 5.0, animations: {
+            toastLbl.alpha = 0
+        }) { (_) in
+            toastLbl.removeFromSuperview()
+        }
+        
+    }
+    
+}
+
+

@@ -15,10 +15,12 @@ protocol PublicationTableViewCellDelegate : class {
     func didLabelNameOwnerPubTapped(idOwnerPub: String, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
     func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
     func didLabelNbrLikesTapped(idPublication: String,nbrLikes: Int, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
+    func didBtnDeletePubClicked(publication: Publication, cell: UITableViewCell, indexPathCell : IndexPath, tableView: UITableView)
 }
 
 class PublicationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var btnDeletePubOutlet: UIButton!
     @IBOutlet weak var imageProfileOwnerPub: UIImageView!
     @IBOutlet weak var nameOwnerPubLabel: UILabel!
     @IBOutlet weak var dateAddPubLabel: UILabel!
@@ -92,7 +94,21 @@ class PublicationTableViewCell: UITableViewCell {
         nbrLikesLabel.isUserInteractionEnabled = true
         nbrLikesLabel.addGestureRecognizer(tapNbrLikesLabel)
         
-
+    }
+    
+    public func updateDetailsPub(publication : Publication, indexPathCell : IndexPath, tableView: UITableView) {
+        // setup Cell
+        self.publication = publication
+        self.indexPathCell = indexPathCell
+        self.tableView = tableView
+        // setup data
+        if(publication.isLiked == true) {
+            self.btnLike.setImage(UIImage(named: "ic_favorite_red"), for: .normal)
+        }else{
+            self.btnLike.setImage(UIImage(named: "ic_favorite_border_black"), for: .normal)
+        }
+        self.nbrLikesLabel.text =  "\(publication.nbrLikes!) " + "Likes"
+        self.nbrCommentsLabel.text =  "\(publication.nbrComments!) " + "Comments"
         
     }
 
@@ -107,6 +123,10 @@ class PublicationTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func btnDeletePubAction(_ sender: Any) {
+        delegatePublication?.didBtnDeletePubClicked(publication: (self.publication)!, cell: self, indexPathCell: self.indexPathCell!, tableView: self.tableView!)
     }
     
     @IBAction func btnLikeAction(_ sender: Any) {

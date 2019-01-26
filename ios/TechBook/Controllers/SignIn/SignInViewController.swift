@@ -31,6 +31,7 @@ class SignInViewController: UIViewController {
         // Show the navigation bar on other view controllers
         self.navigationController?.isNavigationBarHidden = false;
     }
+    
     @IBAction func btnLoginAction(_ sender: Any) {
         let email_tapped = emailTxtField.text
         // test if email is valid

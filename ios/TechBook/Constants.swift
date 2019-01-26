@@ -23,6 +23,8 @@ class Constants {
     static let addComment = baseUrl + "publications/addComment"
     static let getLikesByPublication = baseUrl + "publications/getListLikesByPublication"
     static let getUserById = baseUrl + "users/getUserById"
+    static let getPublicationsByUser = baseUrl + "publications/getAllPublicationsByOwner"
+    static let deletePublicationById = baseUrl + "publications/deletePublication"
     
     
     
@@ -60,6 +62,7 @@ extension String {
     
 }
 
+// underlined label
 class UnderlinedLabel: UILabel {
     
     override var text: String? {
@@ -73,5 +76,6 @@ class UnderlinedLabel: UILabel {
         }
     }
 }
+
 
 

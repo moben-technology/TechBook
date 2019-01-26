@@ -91,7 +91,7 @@ class HomeViewController: UIViewController {
             "perPage": Constants.perPageForListing,
             "page": pageNumber,
         ] as [String : Any]
-        //print("postParameters in getTimeLine",postParameters)
+        print("postParameters in getTimeLine",postParameters)
         Alamofire.request(Constants.getTimeLine, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
             response in
             switch response.result {
@@ -143,6 +143,54 @@ class HomeViewController: UIViewController {
         
     }
     
+    func deletePublication(publication: Publication, indexPathCell : Int){
+        let postParameters = [
+            "publicationId": publication._id!,
+            ] as [String : Any]
+        //print("postParameters deletePublicationById : ",postParameters)
+        Alamofire.request(Constants.deletePublicationById, method: .post, parameters: postParameters,encoding: JSONEncoding.default).responseJSON {
+            response in
+            switch response.result {
+            case .success:
+                guard response.result.error == nil else {
+                    // got an error in getting the data, need to handle it
+                    print("error calling POST")
+                    print(response.result.error!)
+                    return
+                }
+                
+                // make sure we got some JSON since that's what we expect
+                guard let json = response.result.value as? [String: Any] else {
+                    print("didn't get object as JSON from URL")
+                    if let error = response.result.error {
+                        print("Error: \(error)")
+                    }
+                    return
+                }
+                
+                print("response from server of deletePublicationById : ",json)
+                let responseServer = json["status"] as? NSNumber
+                if responseServer == 1{
+                    // remove publication from arrayPublications
+                    self.arrayPublications.remove(at: indexPathCell)
+                    // reload timeLineTableView
+                    self.timeLineTableView.reloadData()
+                    // show toast
+                    self.showToast(message: json["message"] as! String)
+                    
+                }
+                
+                break
+            case .failure(let error):
+                print("error from server : ",error)
+                break
+                
+            }
+            
+        }
+        
+    }
+    
 
 }
 
@@ -160,8 +208,14 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PublicationTableViewCell", for: indexPath) as! PublicationTableViewCell
-        cell.delegatePublication = self // lisener to action btn
+        if(arrayPublications[indexPath.row].owner._id == self.userConnected._id) {
+            cell.btnDeletePubOutlet.isHidden = false
+        }else{
+            cell.btnDeletePubOutlet.isHidden = true
+
+        }
         cell.loadData(publication: arrayPublications[indexPath.row], indexPathCell: indexPath, tableView: tableView)
+        cell.delegatePublication = self // lisener to action btn
         return cell
     }
     
@@ -176,12 +230,34 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
 
 
 extension HomeViewController : PublicationTableViewCellDelegate {
+    
+    func didBtnDeletePubClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
+        // show alerte
+        let alert = UIAlertController(title: "Attention",message: "You are sure to delete your publication?" ,preferredStyle: .alert)
+        // YES button
+        let btnYes = UIAlertAction(title: "YES", style: .default, handler: { (action) -> Void in
+            self.deletePublication(publication: publication, indexPathCell : indexPathCell.row)
+        })
+        
+        // NO button
+        let btnNo = UIAlertAction(title: "NO", style: .destructive, handler: { (action) -> Void in
+            
+        })
+        alert.addAction(btnNo)
+        alert.addAction(btnYes)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     func didLabelNbrLikesTapped(idPublication: String, nbrLikes: Int,cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         if (nbrLikes > 0){
             let popOverListLikesViewController = storyboard?.instantiateViewController(withIdentifier: "ListLikesViewController") as! ListLikesViewController
             popOverListLikesViewController.idPublication = idPublication
-            popOverListLikesViewController.modalPresentationStyle = .popover
-            present(popOverListLikesViewController, animated: true, completion: nil)
+            // show popOver with navigation Bar to enable push to profile with back to popOver
+            let navc = UINavigationController(rootViewController: popOverListLikesViewController)
+            self.present(navc, animated: true, completion: nil)
+            // show popOver with out navigation Bar
+            //popOverListLikesViewController.modalPresentationStyle = .popover
+            //present(popOverListLikesViewController, animated: true, completion: nil)
 
         }
     }
@@ -301,6 +377,45 @@ extension HomeViewController : PublicationTableViewCellDelegate {
         desVC.publication = arrayPublications[indexPathCell.row]
         // push navigationController
         self.navigationController?.pushViewController(desVC, animated: true)
+        
+    }
+    
+}
+
+
+// show toast
+extension HomeViewController {
+    func showToast(message: String) {
+        guard let window = UIApplication.shared.keyWindow else {
+            return
+        }
+        
+        let toastLbl = UILabel()
+        toastLbl.text = message
+        toastLbl.textAlignment = .center
+        toastLbl.font = UIFont.systemFont(ofSize: 18)
+        toastLbl.textColor = UIColor.white
+        toastLbl.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+        toastLbl.numberOfLines = 0
+        
+        
+        let textSize = toastLbl.intrinsicContentSize
+        let labelHeight = ( textSize.width / window.frame.width ) * 30
+        let labelWidth = min(textSize.width, window.frame.width - 40)
+        let adjustedHeight = max(labelHeight, textSize.height + 20)
+        
+        toastLbl.frame = CGRect(x: 20, y: (window.frame.height - 90 ) - adjustedHeight, width: labelWidth + 20, height: adjustedHeight)
+        toastLbl.center.x = window.center.x
+        toastLbl.layer.cornerRadius = 10
+        toastLbl.layer.masksToBounds = true
+        
+        window.addSubview(toastLbl)
+        
+        UIView.animate(withDuration: 5.0, animations: {
+            toastLbl.alpha = 0
+        }) { (_) in
+            toastLbl.removeFromSuperview()
+        }
         
     }
     

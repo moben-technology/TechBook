@@ -149,7 +149,6 @@
                                 </state>
                                 <connections>
                                     <action selector="btnSignupAction:" destination="O6Y-bY-OpD" eventType="touchUpInside" id="981-Cu-Qwe"/>
-                                    <segue destination="0Nh-aj-tvr" kind="modal" identifier="ShowHomeViaSignUp" id="lBa-UZ-yMl"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -165,11 +164,12 @@
                         <outlet property="lastNameTxtField" destination="C8z-dC-PA0" id="EfY-LB-2Sj"/>
                         <outlet property="passwordTxtField" destination="FLw-Vv-Pwv" id="eB7-9e-sN5"/>
                         <outlet property="validationFormLabel" destination="Lfo-TR-pEF" id="gMM-12-rcn"/>
+                        <segue destination="0Nh-aj-tvr" kind="presentation" identifier="ShowHomeViaSignUp" id="zit-Ey-ZPz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4d5-kV-8HG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1940" y="739"/>
+            <point key="canvasLocation" x="1940" y="796"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="ACY-Us-bXc">
@@ -271,9 +271,8 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4gM-bX-8Ej">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="1000"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Gb-uo-Yvk" customClass="CardView" customModule="TechBook" customModuleProvider="target">
-                                                <rect key="frame" x="10" y="60" width="355" height="209"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Gb-uo-Yvk" customClass="CardView" customModule="TechBook" customModuleProvider="target">
+                                                <rect key="frame" x="10" y="60" width="355" height="220"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="weo-VO-tbI">
                                                         <rect key="frame" x="127" y="-50" width="100" height="100"/>
@@ -345,10 +344,45 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </view>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gvB-vU-6aj">
+                                                <rect key="frame" x="0.0" y="289" width="375" height="711"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="711" id="vyZ-2Y-8lM"/>
+                                                </constraints>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="skd-DQ-moo" id="fwr-bX-dIm"/>
+                                                    <outlet property="delegate" destination="skd-DQ-moo" id="P6I-pt-d7q"/>
+                                                </connections>
+                                            </tableView>
+                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Qz-x5-P0A">
+                                                <rect key="frame" x="0.0" y="289" width="375" height="100"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No publication added" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yG7-S0-aor">
+                                                        <rect key="frame" x="20" y="30" width="334" height="21"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="20"/>
+                                                        <color key="textColor" red="0.57414853570000002" green="0.57416242360000003" blue="0.57415497299999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="leading" secondItem="4gM-bX-8Ej" secondAttribute="leading" id="1oC-z0-O6x"/>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="trailing" secondItem="3Qz-x5-P0A" secondAttribute="trailing" id="31t-pO-4nE"/>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="top" secondItem="3Qz-x5-P0A" secondAttribute="top" id="9K0-or-gbU"/>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="centerX" secondItem="2Gb-uo-Yvk" secondAttribute="centerX" id="BKc-Db-OAK"/>
+                                            <constraint firstAttribute="trailing" secondItem="gvB-vU-6aj" secondAttribute="trailing" id="DN2-0h-wXa"/>
+                                            <constraint firstAttribute="bottom" secondItem="gvB-vU-6aj" secondAttribute="bottom" id="F24-Bs-EnV"/>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="top" secondItem="2Gb-uo-Yvk" secondAttribute="bottom" constant="9" id="Ldq-vX-dip"/>
+                                            <constraint firstItem="2Gb-uo-Yvk" firstAttribute="top" secondItem="4gM-bX-8Ej" secondAttribute="top" constant="60" id="TSL-Dx-ruo"/>
+                                            <constraint firstItem="gvB-vU-6aj" firstAttribute="leading" secondItem="3Qz-x5-P0A" secondAttribute="leading" id="TzA-4g-Imj"/>
+                                            <constraint firstAttribute="bottom" secondItem="3Qz-x5-P0A" secondAttribute="bottom" constant="611" id="UnF-l9-jPQ"/>
                                             <constraint firstAttribute="height" constant="1000" id="e4b-Qz-V9S"/>
+                                            <constraint firstItem="2Gb-uo-Yvk" firstAttribute="leading" secondItem="4gM-bX-8Ej" secondAttribute="leading" constant="10" id="frY-AE-mVl"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -388,6 +422,9 @@
                         <outlet property="fullNameLabel" destination="60b-dc-XTz" id="3tU-fI-bBL"/>
                         <outlet property="genderLabel" destination="kNB-Np-zCa" id="0OI-Ln-eLb"/>
                         <outlet property="imageProfileUser" destination="weo-VO-tbI" id="3bp-JF-Znc"/>
+                        <outlet property="publicationsTableView" destination="gvB-vU-6aj" id="jRP-fM-yhb"/>
+                        <outlet property="scrollView" destination="iwM-4k-QZa" id="lim-Eh-Xo4"/>
+                        <outlet property="viewNoPubAdded" destination="3Qz-x5-P0A" id="4LG-Wy-I7B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rZF-ar-05z" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -750,6 +787,6 @@
         <image name="icons-send-comment-filled" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lBa-UZ-yMl"/>
+        <segue reference="zit-Ey-ZPz"/>
     </inferredMetricsTieBreakers>
 </document>
