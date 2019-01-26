@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Publication = require('../models/publication');
+const Publication = require('../models/publication').publicationModel;
 const Sector = require('../models/sector');
 var multer = require('multer');
 var path = require('path');
@@ -14,7 +14,7 @@ var storageFile = multer.diskStorage({
         if (path.extname(file.originalname) == ".mp4"){
             cb(null, 'uploads/videos/')
         }else{
-            cb(null, 'ploads/images/publications/')
+            cb(null, 'uploads/images/publications/')
         }
         
     },
@@ -34,11 +34,12 @@ router.post('/AddPublication',uploadFile.single('file'), function (req, res) {
         if (req.file){
             newPublication.name_file = req.file.filename
         }
-        newPublication.title = req.body.title
-        newPublication.text = req.body.text
-        newPublication.sector = req.body.sectorId
-        newPublication.owner = req.body.ownerId
-        newPublication.type_file = req.body.type_file
+        newPublication.title = req.body.title;
+        newPublication.text = req.body.text;
+        newPublication.sector = req.body.sectorId;
+        newPublication.owner = req.body.ownerId;
+        newPublication.type_file = req.body.type_file;
+        newPublication.createdAt = Date.now();
         
         //save the publication
         newPublication.save(function (err, savedPublication) {
@@ -270,6 +271,7 @@ router.post('/addComment', function (req, res) {
                         const comment = {
                             text: req.body.text,
                             author: req.body.userId,
+                            date: Date.now(),
                         };
                         commentContent.push(comment);
                         publication.comments = commentContent;
@@ -452,6 +454,7 @@ router.post('/addLikeToPublication', function (req, res) {
                         likeContent = publication.likes;
                         const like = {
                             user: req.body.userId,
+                            date: Date.now()
                         };
                         likeContent.push(like);
                         publication.likes = likeContent;

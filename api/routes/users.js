@@ -44,6 +44,7 @@ router.post('/signUp', function (req, res) {
                         gender: req.body.gender,
                         age: req.body.age,
                         photo: "avatar.png",
+                        createdAt: Date.now(),
                     });
                     //save the user
                     newUser.save(function (err, savedUser) {

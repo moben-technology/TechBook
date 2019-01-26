@@ -29,10 +29,10 @@ const userSchema = new Schema({
     photo: {
         type: String
     },
-    createdAt: {
+    createdAt : {
         type: Date,
         default: Date.now()
-    }
+    },
     },
     {
     toJSON:{virtuals:true}

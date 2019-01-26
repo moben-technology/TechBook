@@ -27,10 +27,7 @@ const publicationSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
-    createdAt: {
-        type: Date,
-        default: Date.now()
-    },
+    createdAt:Date,
     comments: [Comment],
     likes: [Like],
     },
@@ -78,5 +75,8 @@ publicationSchema.methods.getPublicationDetails=function () {
     })
 };
 
-
-const Publication = module.exports = mongoose.model('Publication', publicationSchema);
+var publicationModel = mongoose.model('Publication', publicationSchema);
+module.exports = {
+    publicationModel : publicationModel,
+    publicationSchema : publicationSchema
+};
