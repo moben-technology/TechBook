@@ -50,48 +50,13 @@ class HomeViewController: UIViewController {
         
     }
     
-    //dropDownBtnAction
-    @IBAction func dropDownBtnAction(_ sender: Any) {
-        dropDownStatus.show()
-    }
-    
-    func prepareStatusDropDown(){
-        DropDown.startListeningToKeyboard()
-        dropDownStatus.anchorView = dropDownView
-        dropDownStatus.direction = .bottom
-        dropDownStatus.bottomOffset = CGPoint(x: 0, y:(dropDownStatus.anchorView?.plainView.bounds.height)!)
-        dropDownStatus.dataSource = ["Logout"]
-        dropDownStatus.selectionAction = { (index: Int, item: String) in
-            
-            if index == 0 {
-                // change statut of user in NSUserDefaults
-                let userConnected = false
-                self.defaults.set(userConnected, forKey: "userStatut")
-                // change statut of user in NSUserDefaults
-                self.defaults.removeObject(forKey: "objectUser")
-                // Init Root View
-                var initialViewController : UIViewController?
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                var root : UIViewController?
-                root = storyboard.instantiateViewController(withIdentifier: "SignInViewController")
-                initialViewController = UINavigationController(rootViewController: root!)
-                self.window?.rootViewController = initialViewController
-                self.window?.makeKeyAndVisible()
-            
-            }
-            
-        }
-        
-    }
-    
     func getTimeLine(pageNumber:Int){
         let postParameters = [
             "userIdConnected":self.userConnected._id!,
             "perPage": Constants.perPageForListing,
             "page": pageNumber,
         ] as [String : Any]
-        print("postParameters in getTimeLine",postParameters)
+        //print("postParameters in getTimeLine",postParameters)
         Alamofire.request(Constants.getTimeLine, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
             response in
             switch response.result {
@@ -198,7 +163,14 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 460.0
+        var height:CGFloat = CGFloat()
+        if ((arrayPublications[indexPath.row].type_file ) != nil){
+            height = 455
+            
+        }else{
+            height = 260
+        }
+        return height
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -228,7 +200,7 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
     
 }
 
-
+// delegate functions of PublicationTableViewCell
 extension HomeViewController : PublicationTableViewCellDelegate {
     
     func didBtnDeletePubClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
@@ -246,6 +218,7 @@ extension HomeViewController : PublicationTableViewCellDelegate {
         alert.addAction(btnNo)
         alert.addAction(btnYes)
         self.present(alert, animated: true, completion: nil)
+        
     }
     
     func didLabelNbrLikesTapped(idPublication: String, nbrLikes: Int,cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
@@ -255,11 +228,8 @@ extension HomeViewController : PublicationTableViewCellDelegate {
             // show popOver with navigation Bar to enable push to profile with back to popOver
             let navc = UINavigationController(rootViewController: popOverListLikesViewController)
             self.present(navc, animated: true, completion: nil)
-            // show popOver with out navigation Bar
-            //popOverListLikesViewController.modalPresentationStyle = .popover
-            //present(popOverListLikesViewController, animated: true, completion: nil)
-
         }
+        
     }
     
     func didLabelNameOwnerPubTapped(idOwnerPub: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
@@ -270,10 +240,18 @@ extension HomeViewController : PublicationTableViewCellDelegate {
         desVC.idUserReceived = idOwnerPub
         // push navigationController
         self.navigationController?.pushViewController(desVC, animated: true)
+        
     }
     
     func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
-        print("name Sector: ", sector.nameSector! as String)
+        // navigate to searchView to get all publication by sector
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        // send data to desCV
+        desVC.sectorId = sector._id
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+        
     }
     
     func didBtnLikeClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
@@ -304,13 +282,13 @@ extension HomeViewController : PublicationTableViewCellDelegate {
                         return
                     }
                     
-                    print("response from server of dislikePublication : ",json)
+                    //print("response from server of dislikePublication : ",json)
                     let responseServer = json["status"] as? NSNumber
                     if responseServer == 1{
                         let publicationCell = cell as! PublicationTableViewCell
                         publication.isLiked = false
                         publication.nbrLikes = publication.nbrLikes! - 1
-                        publicationCell.loadData(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
+                        publicationCell.updateDetailsPub(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
                     }
                     break
                     
@@ -348,13 +326,13 @@ extension HomeViewController : PublicationTableViewCellDelegate {
                         return
                     }
                     
-                    print("response from server of likePublication : ",json)
+                    //print("response from server of likePublication : ",json)
                     let responseServer = json["status"] as? NSNumber
                     if responseServer == 1{
                         let publicationCell = cell as! PublicationTableViewCell
                         publication.isLiked = true
                         publication.nbrLikes = publication.nbrLikes! + 1
-                        publicationCell.loadData(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
+                        publicationCell.updateDetailsPub(publication: publication, indexPathCell: indexPathCell, tableView: tableView)
     
                     }
                     break
@@ -419,4 +397,42 @@ extension HomeViewController {
         
     }
     
+}
+
+// show drop down menu to logout
+extension HomeViewController {
+    //dropDownBtnAction
+    @IBAction func dropDownBtnAction(_ sender: Any) {
+        dropDownStatus.show()
+    }
+    
+    func prepareStatusDropDown(){
+        DropDown.startListeningToKeyboard()
+        dropDownStatus.anchorView = dropDownView
+        dropDownStatus.direction = .bottom
+        dropDownStatus.bottomOffset = CGPoint(x: 0, y:(dropDownStatus.anchorView?.plainView.bounds.height)!)
+        dropDownStatus.dataSource = ["Logout"]
+        dropDownStatus.selectionAction = { (index: Int, item: String) in
+            
+            if index == 0 {
+                // change statut of user in NSUserDefaults
+                let userConnected = false
+                self.defaults.set(userConnected, forKey: "userStatut")
+                // change statut of user in NSUserDefaults
+                self.defaults.removeObject(forKey: "objectUser")
+                // Init Root View
+                var initialViewController : UIViewController?
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                var root : UIViewController?
+                root = storyboard.instantiateViewController(withIdentifier: "SignInViewController")
+                initialViewController = UINavigationController(rootViewController: root!)
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                
+            }
+            
+        }
+        
+    }
 }

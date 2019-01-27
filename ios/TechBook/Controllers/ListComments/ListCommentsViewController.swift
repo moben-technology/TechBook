@@ -153,7 +153,6 @@ class ListCommentsViewController: UIViewController {
     
     
     @IBAction func btnSendNewCommentAction(_ sender: Any) {
-        print("text to send : ", self.newCommmentTxtView.text)
         if (self.newCommmentTxtView.text == "" || self.newCommmentTxtView.text == self.placeholderCommentTextView){
             // show alerte
             let alert = UIAlertController(title: "Warning",message: "Invalid comment text" ,preferredStyle: .alert)

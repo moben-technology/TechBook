@@ -11,7 +11,7 @@ import UIKit
 class Constants {
     
     // url local server
-    static let baseUrl = "http://192.168.8.115:2500/"
+    static let baseUrl = "http://192.168.8.100:2500/"
     
     static let signInViaEmail = baseUrl + "users/signIn"
     static let signUpViaEmail = baseUrl + "users/signUp"
@@ -25,8 +25,9 @@ class Constants {
     static let getUserById = baseUrl + "users/getUserById"
     static let getPublicationsByUser = baseUrl + "publications/getAllPublicationsByOwner"
     static let deletePublicationById = baseUrl + "publications/deletePublication"
-    
-    
+    static let searchAllPublicationsByTitle = baseUrl + "publications/searchKey?q="
+    static let searchAllPublicationsByTitleAndSector = baseUrl + "publications/searchPubInSector"
+    static let getAllSectors = baseUrl + "sectors/getAllSectors"
     
     static let perPageForListing: Int = 10
 }

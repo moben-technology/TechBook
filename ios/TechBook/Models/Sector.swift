@@ -15,6 +15,12 @@ class Sector: NSObject {
     
     override init() {}
     
+    init(_id: String, nameSector: String) {
+        self._id = _id
+        self.nameSector = nameSector
+    
+    }
+    
     // Parse Request
     init(_ dic : [String : Any])
     {

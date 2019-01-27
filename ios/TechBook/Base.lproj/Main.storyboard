@@ -179,36 +179,105 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8HV-dW-3Qy">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8HV-dW-3Qy">
                                 <rect key="frame" x="209" y="64" width="150" height="0.0"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Search" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3wn-Om-vbi">
-                                <rect key="frame" x="166" y="323" width="54" height="21"/>
+                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="8hc-Ex-Oy6">
+                                <rect key="frame" x="0.0" y="64" width="375" height="56"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="EvU-IB-P3C" id="Jam-rh-gbW"/>
+                                </connections>
+                            </searchBar>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1HA-ej-xgf">
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HeaderCell" id="iCg-My-Jfh">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="iCg-My-Jfh" id="dDj-xn-fEc">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ContentCell" id="mf4-NZ-C58">
+                                        <rect key="frame" x="0.0" y="72" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mf4-NZ-C58" id="x6O-Zw-RtM">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="EvU-IB-P3C" id="bmR-Qj-xf2"/>
+                                    <outlet property="delegate" destination="EvU-IB-P3C" id="qhz-Wd-eao"/>
+                                </connections>
+                            </tableView>
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fii-GN-q1l">
+                                <rect key="frame" x="0.0" y="120" width="375" height="498"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="EvU-IB-P3C" id="kwp-BR-cwk"/>
+                                    <outlet property="delegate" destination="EvU-IB-P3C" id="fOD-lc-oqH"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="1HA-ej-xgf" firstAttribute="top" secondItem="8hc-Ex-Oy6" secondAttribute="bottom" id="HF9-Ax-e5J"/>
+                            <constraint firstItem="8HV-dW-3Qy" firstAttribute="top" secondItem="8hc-Ex-Oy6" secondAttribute="top" id="JHS-Sc-gGp"/>
+                            <constraint firstItem="8hc-Ex-Oy6" firstAttribute="leading" secondItem="s1K-OU-K5X" secondAttribute="leading" id="QjN-Nn-dVG"/>
+                            <constraint firstItem="1HA-ej-xgf" firstAttribute="top" secondItem="8hc-Ex-Oy6" secondAttribute="bottom" id="Xme-Qt-fro"/>
+                            <constraint firstItem="8hc-Ex-Oy6" firstAttribute="trailing" secondItem="s1K-OU-K5X" secondAttribute="trailing" id="ZZB-So-SxG"/>
+                            <constraint firstItem="1HA-ej-xgf" firstAttribute="trailing" secondItem="s1K-OU-K5X" secondAttribute="trailing" id="brO-pr-9nD"/>
+                            <constraint firstItem="1HA-ej-xgf" firstAttribute="bottom" secondItem="s1K-OU-K5X" secondAttribute="bottom" id="dEc-gH-jRL"/>
+                            <constraint firstItem="8HV-dW-3Qy" firstAttribute="leading" secondItem="yot-eV-5Bh" secondAttribute="leading" constant="209" id="fcV-XN-MN9"/>
+                            <constraint firstItem="8HV-dW-3Qy" firstAttribute="top" secondItem="s1K-OU-K5X" secondAttribute="top" id="g9d-IE-Y0d"/>
+                            <constraint firstItem="8HV-dW-3Qy" firstAttribute="trailing" secondItem="yot-eV-5Bh" secondAttribute="trailingMargin" id="krv-da-Ou4"/>
+                            <constraint firstItem="8hc-Ex-Oy6" firstAttribute="top" secondItem="8HV-dW-3Qy" secondAttribute="bottom" id="nBx-f0-AJh"/>
+                            <constraint firstItem="1HA-ej-xgf" firstAttribute="leading" secondItem="s1K-OU-K5X" secondAttribute="leading" id="rho-CF-PKD"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="s1K-OU-K5X"/>
                     </view>
                     <navigationItem key="navigationItem" id="0BK-Md-duT">
-                        <barButtonItem key="rightBarButtonItem" image="icon_menu" id="RJl-cf-OeT">
-                            <connections>
-                                <action selector="dropDownBtnAction:" destination="EvU-IB-P3C" id="Shd-G7-Wb1"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem image="icon_menu" id="RJl-cf-OeT">
+                                <connections>
+                                    <action selector="dropDownBtnAction:" destination="EvU-IB-P3C" id="Shd-G7-Wb1"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem image="ic_filter_list_black" landscapeImage="ic_filter_list_black" id="rBY-jG-pI1">
+                                <connections>
+                                    <action selector="btnFilterSectors:" destination="EvU-IB-P3C" id="FeY-ie-D6v"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnFilterOutlet" destination="rBY-jG-pI1" id="qX0-eB-KWf"/>
                         <outlet property="dropDownView" destination="8HV-dW-3Qy" id="fV6-JP-4aR"/>
+                        <outlet property="searchBar" destination="8hc-Ex-Oy6" id="7aP-Ld-0Fq"/>
+                        <outlet property="searchDisplayController" destination="FUZ-2r-Fh4" id="Wyk-K7-vwE"/>
+                        <outlet property="tableViewSearchByTitle" destination="1HA-ej-xgf" id="N0R-H3-Klf"/>
+                        <outlet property="tableViewSearchByTitleAndSector" destination="fii-GN-q1l" id="Kk4-E8-37T"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UUV-Xb-1Vz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <searchDisplayController id="FUZ-2r-Fh4">
+                    <connections>
+                        <outlet property="delegate" destination="EvU-IB-P3C" id="u1z-ac-SY0"/>
+                        <outlet property="searchContentsController" destination="EvU-IB-P3C" id="vQt-zK-O6Z"/>
+                        <outlet property="searchResultsDataSource" destination="EvU-IB-P3C" id="CWN-zf-hM1"/>
+                        <outlet property="searchResultsDelegate" destination="EvU-IB-P3C" id="uS2-LB-DfS"/>
+                    </connections>
+                </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5124" y="-397"/>
+            <point key="canvasLocation" x="5124" y="-397.15142428785612"/>
         </scene>
         <!--Add Publication View Controller-->
         <scene sceneID="mkO-Su-mok">
@@ -780,6 +849,7 @@
     </scenes>
     <resources>
         <image name="ic_add_gray" width="36" height="36"/>
+        <image name="ic_filter_list_black" width="48" height="48"/>
         <image name="ic_home_gray" width="36" height="36"/>
         <image name="ic_person_gray" width="36" height="36"/>
         <image name="icon_menu" width="3" height="15"/>

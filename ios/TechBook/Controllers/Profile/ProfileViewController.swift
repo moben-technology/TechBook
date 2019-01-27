@@ -52,7 +52,6 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("idUserReceived in viewWillAppear: ", idUserReceived)
         // get user data from UserDefaults
         let objectUser = self.defaults.dictionary(forKey: "objectUser")
         self.userConnected = User(objectUser!)
@@ -120,9 +119,6 @@ class ProfileViewController: UIViewController {
     
     // setup View
     func setUpView(){
-        print("self.currentUser.pictureProfile",self.currentUser.pictureProfile)
-        print("id id id ",self.currentUser._id)
-        
         self.imageProfileUser.sd_setImage(with: URL(string: self.currentUser.pictureProfile!))
         self.fullNameLabel.text = self.currentUser.firstName! + " " + self.currentUser.lastName!
         self.emailLabel.text = self.currentUser.email!
@@ -223,7 +219,7 @@ class ProfileViewController: UIViewController {
                     return
                 }
                 
-                print("response from server of deletePublicationById : ",json)
+                //print("response from server of deletePublicationById : ",json)
                 let responseServer = json["status"] as? NSNumber
                 if responseServer == 1{
                     // remove publication from arrayPublications
@@ -246,42 +242,6 @@ class ProfileViewController: UIViewController {
         
     }
     
-    //dropDownBtnAction
-    @IBAction func dropDownBtnAction(_ sender: Any) {
-        dropDownStatus.show()
-    }
-    
-    func prepareStatusDropDown(){
-        DropDown.startListeningToKeyboard()
-        dropDownStatus.anchorView = dropDownView
-        dropDownStatus.direction = .bottom
-        dropDownStatus.bottomOffset = CGPoint(x: 0, y:(dropDownStatus.anchorView?.plainView.bounds.height)!)
-        dropDownStatus.dataSource = ["Logout"]
-        dropDownStatus.selectionAction = { (index: Int, item: String) in
-            
-            if index == 0 {
-                // change statut of user in NSUserDefaults
-                let userConnected = false
-                self.defaults.set(userConnected, forKey: "userStatut")
-                // change statut of user in NSUserDefaults
-                self.defaults.removeObject(forKey: "objectUser")
-                // Init Root View
-                var initialViewController : UIViewController?
-                self.window = UIWindow(frame: UIScreen.main.bounds)
-                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                var root : UIViewController?
-                root = storyboard.instantiateViewController(withIdentifier: "SignInViewController")
-                initialViewController = UINavigationController(rootViewController: root!)
-                self.window?.rootViewController = initialViewController
-                self.window?.makeKeyAndVisible()
-                
-            }
-            
-        }
-        
-    }
-    
-
 }
 
 
@@ -289,7 +249,14 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
     {
-        return 460.0
+        var height:CGFloat = CGFloat()
+        if ((arrayPublications[indexPath.row].type_file ) != nil){
+            height = 455
+            
+        }else{
+            height = 260
+        }
+        return height
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -319,7 +286,9 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
     
 }
 
+// delegate functions of PublicationTableViewCell
 extension ProfileViewController : PublicationTableViewCellDelegate {
+    
     func didBtnDeletePubClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         // show alerte
         let alert = UIAlertController(title: "Attention",message: "You are sure to delete your publication?" ,preferredStyle: .alert)
@@ -338,7 +307,16 @@ extension ProfileViewController : PublicationTableViewCellDelegate {
     }
     
     func didLabelNameOwnerPubTapped(idOwnerPub: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
-        print("didLabelNameOwnerPubTapped")
+        // test if userConnected is not the owner of the publication
+        if (self.userConnected._id != self.currentUser._id){
+            // navigate between Views from Identifier of Storyboard
+            let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let desVC = MainStory.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+            // send data to desCV
+            desVC.idUserReceived = idOwnerPub
+            // push navigationController
+            self.navigationController?.pushViewController(desVC, animated: true)
+        }
     }
     
     
@@ -356,6 +334,8 @@ extension ProfileViewController : PublicationTableViewCellDelegate {
     
     func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         print("name Sector: ", sector.nameSector! as String)
+        // navigate to searchView to get all publication by sector
+
     }
     
     func didBtnLikeClicked(publication: Publication, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
@@ -500,6 +480,45 @@ extension ProfileViewController {
         
     }
     
+}
+
+// show drop down menu to logout
+extension ProfileViewController {
+    //dropDownBtnAction
+    @IBAction func dropDownBtnAction(_ sender: Any) {
+        dropDownStatus.show()
+    }
+    
+    func prepareStatusDropDown(){
+        DropDown.startListeningToKeyboard()
+        dropDownStatus.anchorView = dropDownView
+        dropDownStatus.direction = .bottom
+        dropDownStatus.bottomOffset = CGPoint(x: 0, y:(dropDownStatus.anchorView?.plainView.bounds.height)!)
+        dropDownStatus.dataSource = ["Logout"]
+        dropDownStatus.selectionAction = { (index: Int, item: String) in
+            
+            if index == 0 {
+                // change statut of user in NSUserDefaults
+                let userConnected = false
+                self.defaults.set(userConnected, forKey: "userStatut")
+                // change statut of user in NSUserDefaults
+                self.defaults.removeObject(forKey: "objectUser")
+                // Init Root View
+                var initialViewController : UIViewController?
+                self.window = UIWindow(frame: UIScreen.main.bounds)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                var root : UIViewController?
+                root = storyboard.instantiateViewController(withIdentifier: "SignInViewController")
+                initialViewController = UINavigationController(rootViewController: root!)
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                
+            }
+            
+        }
+        
+    }
+
 }
 
 
