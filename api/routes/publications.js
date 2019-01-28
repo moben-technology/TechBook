@@ -33,14 +33,13 @@ router.post('/AddPublication',uploadFile.single('file'), function (req, res) {
         var newPublication = new Publication();
         if (req.file){
             newPublication.name_file = req.file.filename
+            newPublication.type_file = req.body.type_file;
         }
         newPublication.title = req.body.title;
         newPublication.text = req.body.text;
         newPublication.sector = req.body.sectorId;
         newPublication.owner = req.body.ownerId;
-        newPublication.type_file = req.body.type_file;
         newPublication.createdAt = Date.now();
-        
         //save the publication
         newPublication.save(function (err, savedPublication) {
         if (err) {
