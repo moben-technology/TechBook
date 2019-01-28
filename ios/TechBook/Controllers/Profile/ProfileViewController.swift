@@ -69,6 +69,15 @@ class ProfileViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.arrayPublications.removeAll()
+        self.currentPageNumber = 1
+        self.totalNbrPages = 1
+        
+    }
+
+    
     func getUserById(){
         let postParameters = [
             "userId":self.idUserReceived,

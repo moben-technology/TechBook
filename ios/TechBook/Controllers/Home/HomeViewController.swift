@@ -41,12 +41,18 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.getTimeLine(pageNumber: self.currentPageNumber)
+        if (self.totalNbrPages >= self.currentPageNumber){
+            self.getTimeLine(pageNumber: self.currentPageNumber)
+        }
+       
     
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.arrayPublications.removeAll()
+        self.currentPageNumber = 1
+        self.totalNbrPages = 1
         
     }
     

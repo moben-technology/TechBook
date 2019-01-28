@@ -90,7 +90,7 @@ class SignUpViewController: UIViewController {
                 "age": ageTxtField.text!,
                 "gender": genderTxtField.text!,
                 ] as [String : Any]
-            print("postParameters in signUpViaEmail",postParameters)
+            //print("postParameters in signUpViaEmail",postParameters)
             Alamofire.request(Constants.signUpViaEmail, method: .post, parameters: postParameters as Parameters,encoding: JSONEncoding.default).responseJSON {
                 response in
                 switch response.result {

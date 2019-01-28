@@ -277,7 +277,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="5124" y="-397.15142428785612"/>
+            <point key="canvasLocation" x="5124" y="-397"/>
         </scene>
         <!--Add Publication View Controller-->
         <scene sceneID="mkO-Su-mok">
@@ -287,20 +287,84 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-w1-9sq">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xUW-w1-9sq">
                                 <rect key="frame" x="209" y="64" width="150" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" id="AZx-GT-8YQ"/>
+                                    <constraint firstAttribute="width" constant="150" id="ypR-c4-nki"/>
+                                </constraints>
+                            </view>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Title" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0cd-eg-GxC">
+                                <rect key="frame" x="16" y="94" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Choose sector" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9jM-Zx-Udo">
+                                <rect key="frame" x="16" y="146" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Oit-mN-6Un">
+                                <rect key="frame" x="16" y="184" width="343" height="150"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J7G-gX-jOj">
+                                <rect key="frame" x="16" y="391" width="343" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Add pub" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RbF-xy-J2j">
-                                <rect key="frame" x="166" y="323" width="65" height="21"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Yh-bz-I9d">
+                                <rect key="frame" x="16" y="391" width="343" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lyy-RV-32V">
+                                <rect key="frame" x="16" y="547" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJO-Lb-3rq">
+                                <rect key="frame" x="16" y="576" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.57637232540000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="btnSubmitAddPublication:" destination="wZH-1d-68F" eventType="touchUpInside" id="DcB-En-JeS"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1KY-2u-XEt">
+                                <rect key="frame" x="324" y="349" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ic_file_upload_black"/>
+                                <connections>
+                                    <action selector="btnSelectFileAction:" destination="wZH-1d-68F" eventType="touchUpInside" id="ghe-kZ-kRM"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Klc-oC-vUI">
+                                <rect key="frame" x="16" y="349" width="35" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="ic_delete_forever_grey"/>
+                                <connections>
+                                    <action selector="btnRemoveFile:" destination="wZH-1d-68F" eventType="touchUpInside" id="Qli-bf-I4O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="xUW-w1-9sq" firstAttribute="top" secondItem="O5M-oN-d7l" secondAttribute="top" id="8gC-ra-TaD"/>
+                            <constraint firstAttribute="trailing" secondItem="xUW-w1-9sq" secondAttribute="trailing" constant="16" id="MRe-aG-8Zf"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="O5M-oN-d7l"/>
                     </view>
                     <navigationItem key="navigationItem" id="Qz3-Fl-OCg">
@@ -311,12 +375,20 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="btnRemoveFile" destination="Klc-oC-vUI" id="oTw-rR-P38"/>
                         <outlet property="dropDownView" destination="xUW-w1-9sq" id="wzq-Q5-VWa"/>
+                        <outlet property="imageSelected" destination="3Yh-bz-I9d" id="qrH-GT-Grh"/>
+                        <outlet property="messageValidationFormLabel" destination="Lyy-RV-32V" id="hEr-dM-qEp"/>
+                        <outlet property="sectorTextField" destination="9jM-Zx-Udo" id="OgX-H7-ATL"/>
+                        <outlet property="textPublication" destination="Oit-mN-6Un" id="exv-gx-sJP"/>
+                        <outlet property="titleTextField" destination="0cd-eg-GxC" id="QBi-dn-g9R"/>
+                        <outlet property="videoSelected" destination="J7G-gX-jOj" id="8FG-g5-3Pi"/>
+                        <segue destination="0Nh-aj-tvr" kind="presentation" identifier="ShowHomeViaAddPub" id="eAx-Zz-H0J"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f01-dR-7Jh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5124" y="456.52173913043481"/>
+            <point key="canvasLocation" x="5124" y="457"/>
         </scene>
         <!--Profile View Controller-->
         <scene sceneID="lco-Vd-cgA">
@@ -849,6 +921,8 @@
     </scenes>
     <resources>
         <image name="ic_add_gray" width="36" height="36"/>
+        <image name="ic_delete_forever_grey" width="24" height="24"/>
+        <image name="ic_file_upload_black" width="18" height="18"/>
         <image name="ic_filter_list_black" width="48" height="48"/>
         <image name="ic_home_gray" width="36" height="36"/>
         <image name="ic_person_gray" width="36" height="36"/>
@@ -857,6 +931,6 @@
         <image name="icons-send-comment-filled" width="50" height="50"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zit-Ey-ZPz"/>
+        <segue reference="eAx-Zz-H0J"/>
     </inferredMetricsTieBreakers>
 </document>
