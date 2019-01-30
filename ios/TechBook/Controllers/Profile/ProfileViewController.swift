@@ -286,6 +286,16 @@ extension ProfileViewController: UITableViewDelegate,UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "PublicationDetailsViewController") as! PublicationDetailsViewController
+        
+        desVC.publication = self.arrayPublications[indexPath.row]
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         // for pagination
         if indexPath.row == arrayPublications.count - 1 && (self.totalNbrPages >= self.currentPageNumber) {
@@ -344,6 +354,12 @@ extension ProfileViewController : PublicationTableViewCellDelegate {
     func didLabelNameSectorTapped(sector: Sector, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
         print("name Sector: ", sector.nameSector! as String)
         // navigate to searchView to get all publication by sector
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "SearchViewController") as! SearchViewController
+        // send data to desCV
+        desVC.sectorId = sector._id
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
 
     }
     

@@ -33,6 +33,7 @@
 		FA0FA78921F7A2A900497644 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA78821F7A2A900497644 /* CardView.swift */; };
 		FA0FA78D21F7A36A00497644 /* PublicationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FA78B21F7A36A00497644 /* PublicationTableViewCell.swift */; };
 		FA0FA78E21F7A36A00497644 /* PublicationTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = FA0FA78C21F7A36A00497644 /* PublicationTableViewCell.xib */; };
+		FA1AF5CD2200ED5B001D0504 /* PublicationDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1AF5CC2200ED5B001D0504 /* PublicationDetailsViewController.swift */; };
 		FA23F3FE21F6648100F6F19F /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F3FD21F6648100F6F19F /* User.swift */; };
 		FA23F40021F6765800F6F19F /* Publication.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F3FF21F6765800F6F19F /* Publication.swift */; };
 		FA23F40221F6791A00F6F19F /* Sector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40121F6791A00F6F19F /* Sector.swift */; };
@@ -107,6 +108,7 @@
 		FA0FA78821F7A2A900497644 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		FA0FA78B21F7A36A00497644 /* PublicationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationTableViewCell.swift; sourceTree = "<group>"; };
 		FA0FA78C21F7A36A00497644 /* PublicationTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PublicationTableViewCell.xib; sourceTree = "<group>"; };
+		FA1AF5CC2200ED5B001D0504 /* PublicationDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicationDetailsViewController.swift; sourceTree = "<group>"; };
 		FA23F3FD21F6648100F6F19F /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FA23F3FF21F6765800F6F19F /* Publication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Publication.swift; sourceTree = "<group>"; };
 		FA23F40121F6791A00F6F19F /* Sector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sector.swift; sourceTree = "<group>"; };
@@ -326,6 +328,14 @@
 			path = "Custom Cells";
 			sourceTree = "<group>";
 		};
+		FA1AF5CB2200ED04001D0504 /* Publication Details */ = {
+			isa = PBXGroup;
+			children = (
+				FA1AF5CC2200ED5B001D0504 /* PublicationDetailsViewController.swift */,
+			);
+			path = "Publication Details";
+			sourceTree = "<group>";
+		};
 		FA92B53921FA5B010011FF2F /* ListLikes */ = {
 			isa = PBXGroup;
 			children = (
@@ -413,6 +423,7 @@
 				FA02EC9B21F5D0F10093A820 /* Profile */,
 				FA9C35D921F8FABE0033F6E1 /* ListComments */,
 				FA92B53921FA5B010011FF2F /* ListLikes */,
+				FA1AF5CB2200ED04001D0504 /* Publication Details */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -670,6 +681,7 @@
 				FA0B4FE121F5C93300047A9C /* IQUIViewController+Additions.swift in Sources */,
 				FA0B4FDB21F5C93300047A9C /* IQKeyboardManagerConstantsInternal.swift in Sources */,
 				FA0B4FD421F5C93300047A9C /* IQTextView.swift in Sources */,
+				FA1AF5CD2200ED5B001D0504 /* PublicationDetailsViewController.swift in Sources */,
 				FA0B4FD621F5C93300047A9C /* IQTitleBarButtonItem.swift in Sources */,
 				FA0FA78921F7A2A900497644 /* CardView.swift in Sources */,
 				FA0B4FE321F5C93300047A9C /* IQUIView+Hierarchy.swift in Sources */,

@@ -188,7 +188,7 @@ class SearchViewController: UIViewController {
             "page": pageNumber,
             "perPage": Constants.perPageForListing,
             ] as [String : Any]
-        print("postParameters: getListPublicationsBySector", postParameters)
+        //print("postParameters: getListPublicationsBySector", postParameters)
         Alamofire.request(Constants.searchAllPublicationsByTitleAndSector , method: .post, parameters: postParameters,encoding: JSONEncoding.default).responseJSON {
             response in
             switch response.result {
@@ -210,7 +210,7 @@ class SearchViewController: UIViewController {
                     return
                     
                 }
-                print("response from server of getListPublicationsBySector : ",json)
+                //print("response from server of getListPublicationsBySector : ",json)
                 let responseServer = json["status"] as? NSNumber
                 if responseServer == 1{
                     if  let data = json["data"] as? [String:Any]{
@@ -421,10 +421,24 @@ extension SearchViewController: UITableViewDelegate,UITableViewDataSource {
                 self.getListPublicationsBySector(sectorId: self.arrayResultSearchByTitle.sectors[indexPath.row]._id!, pageNumber: self.currentPageNumber)
             }else{
                 // navigate to publication details
+                // navigate between Views from Identifier of Storyboard
+                let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                let desVC = MainStory.instantiateViewController(withIdentifier: "PublicationDetailsViewController") as! PublicationDetailsViewController
+                
+                desVC.idPublicationReceived = self.arrayResultSearchByTitle.publications[indexPath.row]._id!
+                // push navigationController
+                self.navigationController?.pushViewController(desVC, animated: true)
             }
             
         }else{
             // navigate to publication details
+            // navigate between Views from Identifier of Storyboard
+            let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let desVC = MainStory.instantiateViewController(withIdentifier: "PublicationDetailsViewController") as! PublicationDetailsViewController
+            
+            desVC.publication = self.arrayResultSearchByTitleAndSector[indexPath.row]
+            // push navigationController
+            self.navigationController?.pushViewController(desVC, animated: true)
 
         }
 

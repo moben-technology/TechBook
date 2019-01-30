@@ -268,7 +268,7 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
                         
                     }
                     if (self.typeFileToAdded == "image") {
-                        multipartFormData.append(self.imageSelected.image!.jpegData(compressionQuality: 1)!, withName: "file", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
+                        multipartFormData.append(self.imageSelected.image!.jpegData(compressionQuality: 0.75)!, withName: "file", fileName: "swift_file.jpeg", mimeType: "image/jpeg")
                     }
                     if (self.typeFileToAdded == "video") {
                         var videoData  = Data()

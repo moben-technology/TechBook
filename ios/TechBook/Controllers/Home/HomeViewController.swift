@@ -17,6 +17,7 @@ class HomeViewController: UIViewController {
     let dropDownStatus = DropDown()
     var window: UIWindow?
     
+    var refresher: UIRefreshControl!
     var arrayPublications: [Publication] = []
     var currentPageNumber: Int = 1
     var totalNbrPages: Int = 1
@@ -37,6 +38,11 @@ class HomeViewController: UIViewController {
         let objectUser = self.defaults.dictionary(forKey: "objectUser")
         self.userConnected = User(objectUser!)
         
+        refresher = UIRefreshControl()
+        refresher.attributedTitle = NSAttributedString(string: "Loading...")
+        refresher.addTarget(self, action: #selector(HomeViewController.refreshData), for: UIControl.Event.valueChanged)
+        timeLineTableView.addSubview(refresher)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -54,6 +60,14 @@ class HomeViewController: UIViewController {
         self.currentPageNumber = 1
         self.totalNbrPages = 1
         
+    }
+    
+    @objc func refreshData()
+    {
+        self.currentPageNumber = 1
+        self.totalNbrPages = 1
+        self.getTimeLine(pageNumber: self.currentPageNumber)
+        refresher.endRefreshing()
     }
     
     func getTimeLine(pageNumber:Int){
@@ -195,6 +209,16 @@ extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
         cell.loadData(publication: arrayPublications[indexPath.row], indexPathCell: indexPath, tableView: tableView)
         cell.delegatePublication = self // lisener to action btn
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "PublicationDetailsViewController") as! PublicationDetailsViewController
+        
+        desVC.publication = arrayPublications[indexPath.row]
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
