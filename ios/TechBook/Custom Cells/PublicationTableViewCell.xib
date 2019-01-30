@@ -55,10 +55,10 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="9Qj-BR-I8F">
-                                <rect key="frame" x="0.0" y="50" width="367" height="314.5"/>
+                                <rect key="frame" x="0.0" y="50" width="365" height="314.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KuI-6a-xRy">
-                                        <rect key="frame" x="0.0" y="0.0" width="367" height="130"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="365" height="130"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I8r-Pn-pNy" customClass="UnderlinedLabel" customModule="TechBook" customModuleProvider="target">
                                                 <rect key="frame" x="10" y="10" width="347" height="21"/>
@@ -85,7 +85,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xPz-1A-3uD">
-                                        <rect key="frame" x="0.0" y="130" width="367" height="184.5"/>
+                                        <rect key="frame" x="0.0" y="130" width="365" height="184.5"/>
                                         <subviews>
                                             <webView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wgP-am-HzQ">
                                                 <rect key="frame" x="10" y="5" width="347" height="175"/>
@@ -145,7 +145,7 @@
                             <constraint firstAttribute="bottom" secondItem="Dcc-8K-B6P" secondAttribute="bottom" id="22Y-uU-Ecr"/>
                             <constraint firstItem="9Qj-BR-I8F" firstAttribute="leading" secondItem="dGY-Ia-0pj" secondAttribute="leading" id="4p8-87-iga"/>
                             <constraint firstAttribute="trailing" secondItem="Dcc-8K-B6P" secondAttribute="trailing" id="ATt-wg-wN0"/>
-                            <constraint firstAttribute="trailing" secondItem="9Qj-BR-I8F" secondAttribute="trailing" constant="-2" id="NQz-Pi-aUU"/>
+                            <constraint firstAttribute="trailing" secondItem="9Qj-BR-I8F" secondAttribute="trailing" id="NQz-Pi-aUU"/>
                             <constraint firstItem="Dcc-8K-B6P" firstAttribute="top" secondItem="9Qj-BR-I8F" secondAttribute="bottom" id="RpQ-s0-fB9"/>
                             <constraint firstItem="9Qj-BR-I8F" firstAttribute="leading" secondItem="Dcc-8K-B6P" secondAttribute="leading" id="WvE-Ul-RCR"/>
                             <constraint firstItem="9Qj-BR-I8F" firstAttribute="top" secondItem="it3-Cj-aNF" secondAttribute="bottom" id="Z5a-aX-3x6"/>

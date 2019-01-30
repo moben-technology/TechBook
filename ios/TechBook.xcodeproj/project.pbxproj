@@ -39,6 +39,9 @@
 		FA23F40221F6791A00F6F19F /* Sector.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40121F6791A00F6F19F /* Sector.swift */; };
 		FA23F40421F67B1500F6F19F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40321F67B1500F6F19F /* Comment.swift */; };
 		FA23F40621F67C4900F6F19F /* Like.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA23F40521F67C4900F6F19F /* Like.swift */; };
+		FA247FC7220224C100E35971 /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA247FC6220224C100E35971 /* FullScreenImageViewController.swift */; };
+		FA247FCA2202385C00E35971 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA247FC92202385C00E35971 /* UpdateProfileViewController.swift */; };
+		FA247FCE2202517100E35971 /* DLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FA247FCD2202517000E35971 /* DLRadioButton.m */; };
 		FA92B53B21FA5B640011FF2F /* ListLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92B53A21FA5B640011FF2F /* ListLikesViewController.swift */; };
 		FA92B53D21FA63DA0011FF2F /* LikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92B53C21FA63DA0011FF2F /* LikeTableViewCell.swift */; };
 		FA9C35DB21F8FB140033F6E1 /* ListCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */; };
@@ -114,6 +117,11 @@
 		FA23F40121F6791A00F6F19F /* Sector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sector.swift; sourceTree = "<group>"; };
 		FA23F40321F67B1500F6F19F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		FA23F40521F67C4900F6F19F /* Like.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Like.swift; sourceTree = "<group>"; };
+		FA247FC6220224C100E35971 /* FullScreenImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenImageViewController.swift; sourceTree = "<group>"; };
+		FA247FC92202385C00E35971 /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
+		FA247FCB2202516D00E35971 /* TechBook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TechBook-Bridging-Header.h"; sourceTree = "<group>"; };
+		FA247FCC2202516F00E35971 /* DLRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLRadioButton.h; sourceTree = "<group>"; };
+		FA247FCD2202517000E35971 /* DLRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLRadioButton.m; sourceTree = "<group>"; };
 		FA92B53A21FA5B640011FF2F /* ListLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLikesViewController.swift; sourceTree = "<group>"; };
 		FA92B53C21FA63DA0011FF2F /* LikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTableViewCell.swift; sourceTree = "<group>"; };
 		FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommentsViewController.swift; sourceTree = "<group>"; };
@@ -250,6 +258,8 @@
 			children = (
 				FA0B4FBC21F5C93300047A9C /* IQKeyboardManagerSwift */,
 				FA0FA78821F7A2A900497644 /* CardView.swift */,
+				FA247FCC2202516F00E35971 /* DLRadioButton.h */,
+				FA247FCD2202517000E35971 /* DLRadioButton.m */,
 			);
 			path = "Custom component";
 			sourceTree = "<group>";
@@ -336,6 +346,22 @@
 			path = "Publication Details";
 			sourceTree = "<group>";
 		};
+		FA247FC52202248700E35971 /* FullSreenImage */ = {
+			isa = PBXGroup;
+			children = (
+				FA247FC6220224C100E35971 /* FullScreenImageViewController.swift */,
+			);
+			path = FullSreenImage;
+			sourceTree = "<group>";
+		};
+		FA247FC82202382100E35971 /* Update Profile */ = {
+			isa = PBXGroup;
+			children = (
+				FA247FC92202385C00E35971 /* UpdateProfileViewController.swift */,
+			);
+			path = "Update Profile";
+			sourceTree = "<group>";
+		};
 		FA92B53921FA5B010011FF2F /* ListLikes */ = {
 			isa = PBXGroup;
 			children = (
@@ -389,6 +415,7 @@
 				FAE5A53B21F366F0007A8EA9 /* Assets.xcassets */,
 				FAE5A53D21F366F0007A8EA9 /* LaunchScreen.storyboard */,
 				FAE5A54021F366F0007A8EA9 /* Info.plist */,
+				FA247FCB2202516D00E35971 /* TechBook-Bridging-Header.h */,
 			);
 			path = TechBook;
 			sourceTree = "<group>";
@@ -421,9 +448,11 @@
 				FA02EC9921F5D0D80093A820 /* Search */,
 				FA02EC9A21F5D0E40093A820 /* Add Publication */,
 				FA02EC9B21F5D0F10093A820 /* Profile */,
+				FA247FC82202382100E35971 /* Update Profile */,
 				FA9C35D921F8FABE0033F6E1 /* ListComments */,
 				FA92B53921FA5B010011FF2F /* ListLikes */,
 				FA1AF5CB2200ED04001D0504 /* Publication Details */,
+				FA247FC52202248700E35971 /* FullSreenImage */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -513,6 +542,7 @@
 				TargetAttributes = {
 					FAE5A53021F366EE007A8EA9 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1010;
 					};
 					FAE5A54421F366F0007A8EA9 = {
 						CreatedOnToolsVersion = 10.1;
@@ -687,6 +717,7 @@
 				FA0B4FE321F5C93300047A9C /* IQUIView+Hierarchy.swift in Sources */,
 				FAE5A53521F366EE007A8EA9 /* AppDelegate.swift in Sources */,
 				FA23F40421F67B1500F6F19F /* Comment.swift in Sources */,
+				FA247FC7220224C100E35971 /* FullScreenImageViewController.swift in Sources */,
 				FACC06D821F3CD6400AFC836 /* AddPublicationViewController.swift in Sources */,
 				FA0B4FDF21F5C93300047A9C /* IQKeyboardManager.swift in Sources */,
 				FA0B4FDE21F5C93300047A9C /* IQKeyboardReturnKeyHandler.swift in Sources */,
@@ -696,6 +727,7 @@
 				FA0B4FE021F5C93300047A9C /* IQUIScrollView+Additions.swift in Sources */,
 				FA0B4FDA21F5C93300047A9C /* IQInvocation.swift in Sources */,
 				FA92B53B21FA5B640011FF2F /* ListLikesViewController.swift in Sources */,
+				FA247FCE2202517100E35971 /* DLRadioButton.m in Sources */,
 				FA9C35DB21F8FB140033F6E1 /* ListCommentsViewController.swift in Sources */,
 				FA0B4FE221F5C93300047A9C /* IQUITextFieldView+Additions.swift in Sources */,
 				FA9C35DD21F906BC0033F6E1 /* CommentTableViewCell.swift in Sources */,
@@ -709,6 +741,7 @@
 				FA23F40221F6791A00F6F19F /* Sector.swift in Sources */,
 				FACC06D421F3C75400AFC836 /* HomeViewController.swift in Sources */,
 				FA0B4FD821F5C93300047A9C /* IQToolbar.swift in Sources */,
+				FA247FCA2202385C00E35971 /* UpdateProfileViewController.swift in Sources */,
 				FA0B4FB921F5C7BC00047A9C /* Constants.swift in Sources */,
 				FA0B4FE621F5CAC800047A9C /* AppTabBar.swift in Sources */,
 			);
@@ -886,6 +919,7 @@
 			baseConfigurationReference = 4B614829205928B497F6B222 /* Pods-TechBook.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YJXTYGC4LF;
 				INFOPLIST_FILE = TechBook/Info.plist;
@@ -896,6 +930,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Moben.TechBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TechBook/TechBook-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -906,6 +942,7 @@
 			baseConfigurationReference = 84B81695034AFE7343800920 /* Pods-TechBook.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = YJXTYGC4LF;
 				INFOPLIST_FILE = TechBook/Info.plist;
@@ -916,6 +953,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Moben.TechBook;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TechBook/TechBook-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

@@ -60,12 +60,12 @@ class SignUpViewController: UIViewController {
     
     @IBAction func btnSignupAction(_ sender: Any) {
         if (self.emailTxtField.text!.isValidEmail()){
-            guard let _ = firstNameTxtField.text , (firstNameTxtField.text?.count)! >= 4 else {
-                validationFormLabel.text = "First name must have 4 caracters"
+            guard let _ = firstNameTxtField.text , (firstNameTxtField.text?.count)! >= 3 else {
+                validationFormLabel.text = "First name must have 3 caracters"
                 return
             }
-            guard let _ = lastNameTxtField.text , (lastNameTxtField.text?.count)! >= 4 else {
-                validationFormLabel.text = "Last name must have 4 caracters"
+            guard let _ = lastNameTxtField.text , (lastNameTxtField.text?.count)! >= 3 else {
+                validationFormLabel.text = "Last name must have 3 caracters"
                 return
             }
             guard let _ = passwordTxtField.text , (passwordTxtField.text?.count)! >= 4 else {

@@ -33,6 +33,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var publicationsTableView: UITableView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var viewNoPubAdded: CardView!
+    @IBOutlet weak var btnOutletUpdateProfile: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,12 +58,12 @@ class ProfileViewController: UIViewController {
         self.userConnected = User(objectUser!)
         //profile to show: is the user connected so get data of user from UserDefaults
         if (idUserReceived == "" || idUserReceived == self.userConnected._id) {
-            print("get user from UserDefaults")
             self.currentUser = self.userConnected
             self.setUpView()
+            self.btnOutletUpdateProfile.isHidden = false
         }else{
             //profile to show: an other user so get data of user from server
-            print("get user from server")
+            self.btnOutletUpdateProfile.isHidden = true
             getUserById()
         }
 
@@ -76,6 +77,17 @@ class ProfileViewController: UIViewController {
         self.totalNbrPages = 1
         
     }
+    
+    @IBAction func btnActionUpdateProfile(_ sender: Any) {
+        // navigate between Views from Identifier of Storyboard
+        let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let desVC = MainStory.instantiateViewController(withIdentifier: "UpdateProfileViewController") as! UpdateProfileViewController
+        
+        //desVC.publication = arrayPublications[indexPathCell.row]
+        // push navigationController
+        self.navigationController?.pushViewController(desVC, animated: true)
+    }
+    
 
     
     func getUserById(){

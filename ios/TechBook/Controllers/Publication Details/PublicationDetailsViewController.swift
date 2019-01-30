@@ -30,8 +30,6 @@ class PublicationDetailsViewController: UIViewController {
     @IBOutlet weak var nbrCommentsLabel: UILabel!
     @IBOutlet weak var btnLike: UIButton!
     @IBOutlet weak var btnShowImageFullScreen: UIButton!
-    @IBOutlet var fullScreenView: UIView!
-    @IBOutlet weak var fullScreenImage: UIImageView!
     
     
     override func viewDidLoad() {
@@ -59,12 +57,7 @@ class PublicationDetailsViewController: UIViewController {
         let tapNbrLikesLabel = UITapGestureRecognizer(target: self, action: #selector(PublicationDetailsViewController.showAllLikes))
         nbrLikesLabel.isUserInteractionEnabled = true
         nbrLikesLabel.addGestureRecognizer(tapNbrLikesLabel)
-        
-        self.fullScreenView.layer.cornerRadius = 10
-        let width = (self.view.frame.size.width) //some width
-        let height = (self.view.frame.size.height ) //some width
-        self.fullScreenView.frame = CGRect(x: 0, y: 0, width: width, height: height)
-        self.fullScreenView.center = self.view.center
+
     }
     
     func getPublicationById(){
@@ -167,17 +160,13 @@ class PublicationDetailsViewController: UIViewController {
     }
     
     
-    @IBAction func btnShowImageFullScreenAction(_ sender: Any) {
-        self.navigationController?.isNavigationBarHidden = true;
-        self.fullScreenImage.sd_setImage(with: URL(string: publication.url_file!))
-        self.view.addSubview(self.fullScreenView)
+    @IBAction func btnShowImageFullScreenAction(_ sender: Any) {        
+        let fullScreenImageView = storyboard?.instantiateViewController(withIdentifier: "FullScreenImageViewController") as! FullScreenImageViewController
+        fullScreenImageView.urlImage = publication.url_file!
+        let navc = UINavigationController(rootViewController: fullScreenImageView)
+        self.present(navc, animated: true, completion: nil)
     }
     
-    @IBAction func btnCancelFullScreenView(_ sender: Any) {
-        self.navigationController?.isNavigationBarHidden = false;
-        self.fullScreenView.removeFromSuperview()
-        
-    }
     
     @objc func showProfileOwnerPub() {
         // navigate between Views from Identifier of Storyboard
