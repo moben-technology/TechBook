@@ -46,6 +46,7 @@ userSchema.methods.getUser=function () {
         lastName: this.lastName,
         gender: this.gender,
         age: this.age,
+        photo: this.photo,
         pictureProfile:this.pictureProfile,
         createdAt: this.createdAt
     })
@@ -61,6 +62,7 @@ userSchema.methods.getShortInfoUser=function () {
 };
 
 userSchema.virtual('pictureProfile').get(function () {
+    //return config.host+pathFolder + this.photo;
     if (this.photo !== undefined) {
     return config.host+pathFolder + this.photo;
     }else{

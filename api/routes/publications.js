@@ -69,7 +69,7 @@ router.post('/AddPublication',uploadFile.single('file'), function (req, res) {
 router.post('/getPublicationById', function (req, res) {
     try {
 
-        Publication.findOne({'_id': req.body.publicationId}).populate('owner',{'firstName': 1,'lastName':1}).populate('sector').exec(function (err, publication) {
+        Publication.findOne({'_id': req.body.publicationId}).populate('owner',{'firstName': 1,'lastName':1,'photo':1}).populate('sector').exec(function (err, publication) {
             if (err) {
                 return res.json({
                     status: 0,
@@ -132,7 +132,7 @@ router.post('/getAllPublicationsByOwner', function (req, res) {
             sort: {'createdAt': -1},
             skip: (perPage * page) - perPage,
             limit: perPage})
-        .populate('owner',{'firstName': 1,'lastName':1})
+        .populate('owner',{'firstName': 1,'lastName':1,'photo':1})
         .populate('sector')
         .exec(function (err, publications) {
             if (err) {
@@ -368,7 +368,7 @@ router.post('/getCommentsByPublication', function (req, res) {
                             try {
                                 Publication.populate(comment, {
                                     path: 'comments.author',
-                                    select: '_id firstName lastName pictureProfile'
+                                    select: '_id firstName lastName photo pictureProfile'
                                 }, function (err, populatedComment) {
                                     // Your populated translactions are inside populatedTransactions
 
@@ -551,7 +551,7 @@ router.post('/getListLikesByPublication', function (req, res) {
                             try {
                                 Publication.populate(like, {
                                     path: 'likes.user',
-                                    select: '_id firstName lastName pictureProfile'
+                                    select: '_id firstName lastName photo pictureProfile'
                                 }, function (err, populatedLike) {
                                     // Your populated translactions are inside populatedTransactions
 
@@ -750,7 +750,7 @@ router.post('/searchPubInSector', function (req, res) {
             sort: {'createdAt': -1},
             skip: (perPage * page) - perPage,
             limit: perPage})
-        .populate('owner',{'firstName': 1,'lastName':1})
+        .populate('owner',{'firstName': 1,'lastName':1,'photo':1})
         .populate('sector')
         .exec(function (err, publications) {
         if (err) {
@@ -813,7 +813,7 @@ router.post('/getAllPublicationsForTimeLine', function (req, res) {
             sort: {'createdAt': -1},
             skip: (perPage * page) - perPage,
             limit: perPage})
-        .populate('owner',{'firstName': 1,'lastName':1})
+        .populate('owner',{'firstName': 1,'lastName':1,'photo':1})
         .populate('sector')
         .exec(function (err, publications) {
             if (err) {
