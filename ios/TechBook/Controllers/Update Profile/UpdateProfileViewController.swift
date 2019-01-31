@@ -66,7 +66,7 @@ class UpdateProfileViewController: UIViewController, UINavigationControllerDeleg
     }
     
     @objc func showUpdatePasswordView(){
-        self.updatePasswordView.isHidden = false
+        self.updatePasswordView.isHidden = !self.updatePasswordView.isHidden
     }
     
     @IBAction func btnGenderAction(_ sender: DLRadioButton) {

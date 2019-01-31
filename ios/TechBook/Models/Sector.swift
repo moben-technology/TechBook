@@ -12,6 +12,7 @@ class Sector: NSObject {
     
     var _id : String?
     var nameSector : String?
+    var count : Int?
     
     override init() {}
     
@@ -30,6 +31,10 @@ class Sector: NSObject {
         if let _nameSector = dic["nameSector"] as! String? {
             self.nameSector = _nameSector
         }
+        if let _count = dic["count"] as! Int? {
+            self.count = _count
+        }
+
         
     }
     

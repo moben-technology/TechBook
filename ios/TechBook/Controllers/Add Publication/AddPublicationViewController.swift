@@ -13,6 +13,7 @@ import Alamofire
 import AVKit
 import AVFoundation
 import MobileCoreServices
+import AssetsLibrary
 
 class AddPublicationViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
@@ -48,8 +49,10 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         // delegate sector text field
         self.sectorTextField.delegate = self
         // set up  text view
-        self.textPublication.layer.borderWidth = 1.0
-        self.textPublication.layer.cornerRadius = 10
+        let lightGrayColor : UIColor = UIColor.lightGray
+        self.textPublication.layer.borderColor = lightGrayColor.cgColor
+        self.textPublication.layer.borderWidth = 0.5
+        self.textPublication.layer.cornerRadius = 15
         self.textPublication.text = self.placeholderPublicationTextView
         self.textPublication.textColor = UIColor.lightGray
         self.textPublication.font = UIFont(name: "verdana", size: 13.0)
@@ -63,13 +66,25 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if (self.typeFileToAdded == "image") {
-            self.videoSelected = nil
+            //self.videoSelected = nil
+            self.videoSelected.isHidden = true
         }else if (self.typeFileToAdded == "video"){
-            self.imageSelected.image = nil
+            //self.imageSelected.image = nil
+             self.imageSelected.isHidden = true
         }else{
-            self.videoSelected = nil
-            self.imageSelected.image = nil
-            self.btnRemoveFile.isHidden = true
+//            self.videoSelected = nil
+//            self.imageSelected.image = nil
+             //self.imageSelected.isHidden = true
+            if(self.videoSelected?.isHidden == false){
+                self.videoSelected.isHidden = true
+            }
+            if(self.imageSelected?.isHidden == false){
+                self.imageSelected.isHidden = true
+            }
+            if(self.btnRemoveFile?.isHidden == false){
+                self.btnRemoveFile.isHidden = true
+            }
+            
         }
         self.typeFileToAdded = ""
     }
@@ -135,7 +150,7 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         }
         
         let getVideoAction = UIAlertAction(title: "Video", style: .default) { action in
-            // Display Photo Library to get video
+            // Display Photo Library
             self.controller.sourceType = UIImagePickerController.SourceType.photoLibrary
             self.controller.mediaTypes = [kUTTypeMovie as String]
             self.controller.delegate = self
@@ -158,6 +173,57 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
 
     }
     
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            self.typeFileToAdded = "image"
+            //self.videoSelected = nil
+            self.videoSelected?.isHidden = true
+            self.imageSelected?.isHidden = false
+            self.imageSelected.image = pickedImage
+            picker.dismiss(animated: true, completion: nil)
+        }else{
+            videoUrlFromLibrary = info[UIImagePickerController.InfoKey.mediaURL] as? URL
+            
+            // Setup view player
+            if let urlVideo = videoUrlFromLibrary {
+                //self.imageSelected = nil
+                self.imageSelected?.isHidden = true
+                self.videoSelected?.isHidden = false
+                self.typeFileToAdded = "video"
+                player = AVPlayer(url: urlVideo)
+                let playerLayer = AVPlayerLayer(player: player)
+                playerLayer.frame = self.videoSelected.bounds
+                self.videoSelected.layer.addSublayer(playerLayer)
+                picker.dismiss(animated: true, completion: nil)
+
+            }
+        }
+        self.btnRemoveFile.isHidden = false
+        //self.dismiss(animated: true, completion: nil)
+    }
+    
+//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+//        if (self.typeFileToAdded == "image") {
+//            //self.videoSelected = nil
+//            //self.imageSelected?.isHidden = false
+//            self.videoSelected?.isHidden = true
+//            self.btnRemoveFile?.isHidden = false
+//        }else if (self.typeFileToAdded == "video"){
+//             //self.imageSelected.image = nil
+//            self.imageSelected?.isHidden = true
+//            //self.videoSelected?.isHidden = false
+//            self.btnRemoveFile?.isHidden = false
+//        }else{
+//            //self.videoSelected = nil
+//            //self.imageSelected.image = nil
+//            self.imageSelected.isHidden = true
+//            self.videoSelected.isHidden = true
+//            self.btnRemoveFile.isHidden = true
+//        }
+//        picker.dismiss(animated: true, completion: nil)
+//    }
+    
     @IBAction func btnRemoveFile(_ sender: Any) {
         
         // show alerte
@@ -165,9 +231,14 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         // YES button
         let btnYes = UIAlertAction(title: "YES", style: .default, handler: { (action) -> Void in
             if (self.typeFileToAdded == "image") {
-                self.imageSelected.image = nil
+                //self.imageSelected.image = nil
+                self.imageSelected?.isHidden = true
             }else if (self.typeFileToAdded == "video"){
-                self.videoSelected = nil
+                //self.videoSelected = nil
+                self.videoSelected?.isHidden = true
+            }else{
+                self.imageSelected?.isHidden = true
+                self.videoSelected?.isHidden = true
             }
             self.typeFileToAdded = ""
             self.btnRemoveFile.isHidden = true
@@ -180,50 +251,8 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         alert.addAction(btnNo)
         alert.addAction(btnYes)
         self.present(alert, animated: true, completion: nil)
-
-    }
-    
-   
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            self.typeFileToAdded = "image"
-            self.imageSelected.image = pickedImage
-            self.videoSelected = nil
-            picker.dismiss(animated: true, completion: nil)
-        }else{
-            videoUrlFromLibrary = info[UIImagePickerController.InfoKey.mediaURL] as? URL
-            // Setup view player
-            if let urlVideo = videoUrlFromLibrary {
-                self.imageSelected = nil
-                self.typeFileToAdded = "video"
-                player = AVPlayer(url: urlVideo)
-                let playerLayer = AVPlayerLayer(player: player)
-                playerLayer.frame = self.videoSelected.bounds
-                self.videoSelected.layer.addSublayer(playerLayer)
-            }
-        }
-        self.btnRemoveFile.isHidden = false
-        
-        
-        self.dismiss(animated: true, completion: nil)
     }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        if (self.typeFileToAdded == "image") {
-            self.videoSelected = nil
-            self.btnRemoveFile.isHidden = false
-        }else if (self.typeFileToAdded == "video"){
-            self.imageSelected.image = nil
-            self.btnRemoveFile.isHidden = false
-        }else{
-            self.videoSelected = nil
-            self.imageSelected.image = nil
-            self.btnRemoveFile.isHidden = true
-        }
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
     
     
     

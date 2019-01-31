@@ -30,6 +30,10 @@ class ListCommentsViewController: UIViewController {
         let objectUser = self.defaults.dictionary(forKey: "objectUser")
         self.userConnected = User(objectUser!)
         // custom placeholder to textView
+        let whiteColor : UIColor = UIColor.white
+        self.newCommmentTxtView.layer.borderWidth = 0.5
+        self.newCommmentTxtView.layer.borderColor = whiteColor.cgColor
+        self.newCommmentTxtView.layer.cornerRadius = 15
         newCommmentTxtView.text = self.placeholderCommentTextView
         newCommmentTxtView.textColor = UIColor.lightGray
         newCommmentTxtView.font = UIFont(name: "verdana", size: 13.0)

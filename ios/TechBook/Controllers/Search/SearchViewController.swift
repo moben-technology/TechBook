@@ -67,7 +67,7 @@ class SearchViewController: UIViewController {
     }
     
     func getAllSectors(){
-        Alamofire.request(Constants.getAllSectors, method: .get,encoding: JSONEncoding.default).responseJSON {
+        Alamofire.request(Constants.getAllSectorsWithNbrOccurences, method: .get,encoding: JSONEncoding.default).responseJSON {
             response in
             switch response.result {
             case .success:
@@ -118,7 +118,7 @@ class SearchViewController: UIViewController {
         let alert = UIAlertController(title: "Choose Sector", message: nil, preferredStyle: UIAlertController.Style.alert)
         for sectorDic in self.arrayAllSectorsForFilter{
             
-            let action = UIAlertAction(title: sectorDic.nameSector, style: .default, handler: { (action) -> Void in
+            let action = UIAlertAction(title: sectorDic.nameSector! + " " + "(\(sectorDic.count ?? 0))", style: .default, handler: { (action) -> Void in
                 self.searchBar.text = ""
                 self.arrayResultSearchByTitleAndSector.removeAll()
                 self.currentPageNumber = 1

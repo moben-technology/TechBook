@@ -22,6 +22,7 @@ class SignInViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.validationFormLabel.text = ""
         // Hide the navigation bar for current view controller
         self.navigationController?.isNavigationBarHidden = true;
     }
