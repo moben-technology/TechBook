@@ -10,8 +10,8 @@ import Foundation
 import UIKit
 class Constants {
     
-    // url local server
-    static let baseUrl = "http://192.168.7.136:2500/"
+    // url local server (@ip of your mac)
+    static let baseUrl = "http://192.168.1.81:2500/"
     
     static let signInViaEmail = baseUrl + "users/signIn"
     static let signUpViaEmail = baseUrl + "users/signUp"

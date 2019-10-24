@@ -41,6 +41,14 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //hide keyboard on click outside
+        self.setupHideKeyboardOnTap()
+        
+        // Move keybord between textFields
+        titleTextField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        
+        
         // get user data from UserDefaults
         let objectUser = self.defaults.dictionary(forKey: "objectUser")
         self.userConnected = User(objectUser!)
@@ -52,7 +60,7 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         let lightGrayColor : UIColor = UIColor.lightGray
         self.textPublication.layer.borderColor = lightGrayColor.cgColor
         self.textPublication.layer.borderWidth = 0.5
-        self.textPublication.layer.cornerRadius = 15
+        self.textPublication.layer.cornerRadius = 5
         self.textPublication.text = self.placeholderPublicationTextView
         self.textPublication.textColor = UIColor.lightGray
         self.textPublication.font = UIFont(name: "verdana", size: 13.0)
@@ -72,9 +80,6 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
             //self.imageSelected.image = nil
              self.imageSelected.isHidden = true
         }else{
-//            self.videoSelected = nil
-//            self.imageSelected.image = nil
-             //self.imageSelected.isHidden = true
             if(self.videoSelected?.isHidden == false){
                 self.videoSelected.isHidden = true
             }
@@ -202,27 +207,6 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
         self.btnRemoveFile.isHidden = false
         //self.dismiss(animated: true, completion: nil)
     }
-    
-//    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-//        if (self.typeFileToAdded == "image") {
-//            //self.videoSelected = nil
-//            //self.imageSelected?.isHidden = false
-//            self.videoSelected?.isHidden = true
-//            self.btnRemoveFile?.isHidden = false
-//        }else if (self.typeFileToAdded == "video"){
-//             //self.imageSelected.image = nil
-//            self.imageSelected?.isHidden = true
-//            //self.videoSelected?.isHidden = false
-//            self.btnRemoveFile?.isHidden = false
-//        }else{
-//            //self.videoSelected = nil
-//            //self.imageSelected.image = nil
-//            self.imageSelected.isHidden = true
-//            self.videoSelected.isHidden = true
-//            self.btnRemoveFile.isHidden = true
-//        }
-//        picker.dismiss(animated: true, completion: nil)
-//    }
     
     @IBAction func btnRemoveFile(_ sender: Any) {
         
@@ -378,6 +362,16 @@ class AddPublicationViewController: UIViewController, UINavigationControllerDele
 }
 
 extension AddPublicationViewController: UITextFieldDelegate {
+    
+    // move keyboard
+    @objc func textFieldDidChange(textField: UITextField){
+        if (self.titleTextField.isFirstResponder){
+            self.titleTextField.resignFirstResponder()
+            self.sectorTextField.becomeFirstResponder()
+            
+        }
+        
+    }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         view.endEditing(true)

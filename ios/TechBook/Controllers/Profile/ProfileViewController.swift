@@ -140,7 +140,12 @@ class ProfileViewController: UIViewController {
     
     // setup View
     func setUpView(){
-        self.imageProfileUser.sd_setImage(with: URL(string: self.currentUser.pictureProfile!))
+        // load avatar user
+        if ((self.currentUser.pictureProfile) != nil){
+            self.imageProfileUser.sd_setImage(with: URL(string: self.currentUser.pictureProfile!), placeholderImage: UIImage(named: "avatar"), options: [], completed: nil)
+
+        }
+        //self.imageProfileUser.sd_setImage(with: URL(string: self.currentUser.pictureProfile!))
         self.fullNameLabel.text = self.currentUser.firstName! + " " + self.currentUser.lastName!
         self.emailLabel.text = self.currentUser.email!
         self.genderLabel.text = self.currentUser.gender!

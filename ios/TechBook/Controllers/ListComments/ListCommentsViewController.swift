@@ -24,6 +24,10 @@ class ListCommentsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //hide keyboard on click outside
+        self.setupHideKeyboardOnTap()
+        
         // remove extra empty cells
         self.commentsTableView.tableFooterView = UIView()
         // get user data from UserDefaults
@@ -219,11 +223,6 @@ class ListCommentsViewController: UIViewController {
 
 extension ListCommentsViewController: UITableViewDelegate,UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        return 100.0
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrayComments.count
     }
@@ -252,7 +251,6 @@ extension ListCommentsViewController: UITableViewDelegate,UITableViewDataSource 
 
 extension ListCommentsViewController : CommentTableViewCellDelegate {
     func didLabelNameAuthorCommentTapped(idAuthorComment: String, cell: UITableViewCell, indexPathCell: IndexPath, tableView: UITableView) {
-        //print("idAuthorComment: ",idAuthorComment)
         // navigate between Views from Identifier of Storyboard
         let MainStory:UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let desVC = MainStory.instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController

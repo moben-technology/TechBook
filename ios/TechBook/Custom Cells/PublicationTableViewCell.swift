@@ -45,14 +45,25 @@ class PublicationTableViewCell: UITableViewCell {
         self.tableView = tableView
         // setup data
         self.nameOwnerPubLabel.text = publication.owner.firstName! + " " + publication.owner.lastName!
-        self.imageProfileOwnerPub.sd_setImage(with: URL(string: publication.owner.pictureProfile!))
         self.imageProfileOwnerPub.layer.cornerRadius = self.imageProfileOwnerPub.frame.size.width/2
+        self.imageProfileOwnerPub.sd_setImage(with: URL(string: publication.owner.pictureProfile!))
+        if ((publication.owner.pictureProfile) != nil){
+            self.imageProfileOwnerPub.sd_setImage(with: URL(string: publication.owner.pictureProfile!), placeholderImage: UIImage(named: "avatar"), options: [], completed: nil)
+            
+        }
         self.imageProfileOwnerPub.clipsToBounds = true
         // setup pub details
         self.dateAddPubLabel.text = publication.createdAt
         self.titlePubLabel.text = publication.title
         self.nameSectorLabel.text = publication.sector.nameSector
-        self.textPubLabel.text = publication.text
+        self.imagePub.isHidden = true
+        if(publication.text != nil || publication.text != ""){
+            self.textPubLabel.isHidden = false
+            self.textPubLabel.text = publication.text
+        }else{
+            self.textPubLabel.isHidden = true
+        }
+        
         if ((publication.type_file ) != nil){
             if(publication.type_file == "image"){
                 self.videoPub.isHidden = true

@@ -153,7 +153,7 @@ class HomeViewController: UIViewController {
                     return
                 }
                 
-                print("response from server of deletePublicationById : ",json)
+                //print("response from server of deletePublicationById : ",json)
                 let responseServer = json["status"] as? NSNumber
                 if responseServer == 1{
                     // remove publication from arrayPublications
@@ -180,19 +180,7 @@ class HomeViewController: UIViewController {
 }
 
 extension HomeViewController: UITableViewDelegate,UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        var height:CGFloat = CGFloat()
-        if ((arrayPublications[indexPath.row].type_file ) != nil){
-            height = 455
-            
-        }else{
-            height = 260
-        }
-        return height
-    }
-    
+        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.arrayPublications.count
     }

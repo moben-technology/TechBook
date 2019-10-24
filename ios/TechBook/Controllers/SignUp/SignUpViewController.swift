@@ -26,11 +26,21 @@ class SignUpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
+        //hide keyboard on click outside
+        self.setupHideKeyboardOnTap()
+        
+        // Move keybord between textFields
+        firstNameTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        lastNameTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        emailTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        passwordTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        ageTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        
         // delegate max length
         self.firstNameTxtField.delegate = self
         self.lastNameTxtField.delegate = self
-        // make text field secure
-        passwordTxtField.isSecureTextEntry = true
+        
         // create pickerView for to choose gender
         createGenderPickerView()
         
@@ -184,16 +194,6 @@ class SignUpViewController: UIViewController {
     
 }
 
-extension SignUpViewController: UITextFieldDelegate {
-    func textField(_ textField: UITextField,
-                   shouldChangeCharactersIn range: NSRange,
-                   replacementString string: String) -> Bool {
-        return textField.text!.count < 30 || string == ""
-        
-    }
-    
-}
-
 extension SignUpViewController: UIPickerViewDataSource,UIPickerViewDelegate {
     //UIPickerViewDataSource
     // number of colums
@@ -214,6 +214,38 @@ extension SignUpViewController: UIPickerViewDataSource,UIPickerViewDelegate {
         return self.arrayGender[row]
     }
     
+    
+}
+
+extension SignUpViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
+        return textField.text!.count < 30 || string == ""
+        
+    }
+    
+    // move keyboard
+    @objc func textFieldDidChange(textField: UITextField){
+        if (self.firstNameTxtField.isFirstResponder){
+            self.firstNameTxtField.resignFirstResponder()
+            self.lastNameTxtField.becomeFirstResponder()
+            
+        }else if (self.lastNameTxtField.isFirstResponder){
+            self.lastNameTxtField.resignFirstResponder()
+            self.emailTxtField.becomeFirstResponder()
+            
+        }else if (self.emailTxtField.isFirstResponder){
+            self.emailTxtField.resignFirstResponder()
+            self.ageTxtField.becomeFirstResponder()
+            
+        }else if (self.ageTxtField.isFirstResponder){
+            self.ageTxtField.resignFirstResponder()
+            self.genderTxtField.becomeFirstResponder()
+            
+        }
+        
+    }
     
 }
 

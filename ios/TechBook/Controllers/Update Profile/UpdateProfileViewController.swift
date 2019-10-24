@@ -17,7 +17,7 @@ class UpdateProfileViewController: UIViewController, UINavigationControllerDeleg
     @IBOutlet weak var lastNameTxtField: UITextField!
     @IBOutlet weak var ageTxtField: UITextField!
     @IBOutlet weak var updatePasswordLabel: UILabel!
-    @IBOutlet weak var updatePasswordView: UIView!
+    @IBOutlet weak var updatePasswordView: UIStackView!
     @IBOutlet weak var oldPasswordTxtField: UITextField!
     @IBOutlet weak var newPasswordTxtField: UITextField!
     @IBOutlet weak var validationFormLabel: UILabel!
@@ -188,7 +188,7 @@ class UpdateProfileViewController: UIViewController, UINavigationControllerDeleg
                                     self.defaults.set(userData, forKey: "objectUser")
                                     self.defaults.synchronize()
                                     self.showToast(message: (result["message"] as? String)!)
-                                    self.navigationController?.popViewController(animated: true)
+                                    //self.navigationController?.popViewController(animated: true)
                                 }
                             }
                             
@@ -239,7 +239,7 @@ extension UpdateProfileViewController {
         
         window.addSubview(toastLbl)
         
-        UIView.animate(withDuration: 5.0, animations: {
+        UIView.animate(withDuration: 10.0, animations: {
             toastLbl.alpha = 0
         }) { (_) in
             toastLbl.removeFromSuperview()

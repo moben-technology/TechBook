@@ -29,7 +29,6 @@ class PublicationDetailsViewController: UIViewController {
     @IBOutlet weak var nbrLikesLabel: UILabel!
     @IBOutlet weak var nbrCommentsLabel: UILabel!
     @IBOutlet weak var btnLike: UIButton!
-    @IBOutlet weak var btnShowImageFullScreen: UIButton!
     
     
     override func viewDidLoad() {
@@ -45,6 +44,10 @@ class PublicationDetailsViewController: UIViewController {
             self.getPublicationById()
         }
         
+        // delegate tap imagePub
+        self.imagePub.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(PublicationDetailsViewController.didTapImagePub))
+        imagePub.addGestureRecognizer(tap)
         
         let tapNameOwnerLabel = UITapGestureRecognizer(target: self, action: #selector(PublicationDetailsViewController.showProfileOwnerPub))
         nameOwnerPubLabel.isUserInteractionEnabled = true
@@ -124,12 +127,10 @@ class PublicationDetailsViewController: UIViewController {
             if(publication.type_file == "image"){
                 self.videoPub.isHidden = true
                 self.imagePub.isHidden = false
-                self.btnShowImageFullScreen.isHidden = false
                 self.imagePub.sd_setImage(with: URL(string: publication.url_file!))
             }else if (publication.type_file == "video"){
                 self.imagePub.isHidden = true
                 self.videoPub.isHidden = false
-                self.btnShowImageFullScreen.isHidden = true
                 
                 DispatchQueue.main.async {
                     self.videoPub.loadHTMLString("<iframe width= \" \(self.videoPub.frame.width) \"height=\"\(self.videoPub.frame.height)\"src = \"\(self.publication.url_file!)\"> </iframe>", baseURL: nil)
@@ -142,7 +143,7 @@ class PublicationDetailsViewController: UIViewController {
         }else{
             self.imagePub.isHidden = true
             self.videoPub.isHidden = true
-            self.btnShowImageFullScreen.isHidden = true
+            
         }
         if(publication.isLiked == true) {
             self.btnLike.setImage(UIImage(named: "ic_favorite_red"), for: .normal)
@@ -158,15 +159,6 @@ class PublicationDetailsViewController: UIViewController {
             
         }
     }
-    
-    
-    @IBAction func btnShowImageFullScreenAction(_ sender: Any) {        
-        let fullScreenImageView = storyboard?.instantiateViewController(withIdentifier: "FullScreenImageViewController") as! FullScreenImageViewController
-        fullScreenImageView.urlImage = publication.url_file!
-        let navc = UINavigationController(rootViewController: fullScreenImageView)
-        self.present(navc, animated: true, completion: nil)
-    }
-    
     
     @objc func showProfileOwnerPub() {
         // navigate between Views from Identifier of Storyboard
@@ -186,6 +178,14 @@ class PublicationDetailsViewController: UIViewController {
         desVC.sectorId = self.publication.sector._id
         // push navigationController
         self.navigationController?.pushViewController(desVC, animated: true)
+    }
+    
+    @objc private func didTapImagePub() {
+        let fullScreenImageView = storyboard?.instantiateViewController(withIdentifier: "FullScreenImageViewController") as! FullScreenImageViewController
+        fullScreenImageView.urlImage = publication.url_file!
+        let navc = UINavigationController(rootViewController: fullScreenImageView)
+        self.present(navc, animated: true, completion: nil)
+        
     }
     
     @objc func showAllLikes() {

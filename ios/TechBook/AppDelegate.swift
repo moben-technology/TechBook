@@ -13,13 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let defaults = UserDefaults.standard
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // use IQKeyboardManager
-        IQKeyboardManager.shared.enable = true
-        IQKeyboardManager.shared.enableAutoToolbar = true
-        
         //Controle of Session
         let userStaut = self.defaults.bool(forKey: "userStatut")
         // Init Root View
@@ -39,7 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             initialViewController = storyboard.instantiateViewController(withIdentifier: "AppTabBar")
             
         }
-        
         self.window?.rootViewController = initialViewController
         self.window?.makeKeyAndVisible()
         

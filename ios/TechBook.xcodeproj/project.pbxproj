@@ -42,6 +42,8 @@
 		FA247FC7220224C100E35971 /* FullScreenImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA247FC6220224C100E35971 /* FullScreenImageViewController.swift */; };
 		FA247FCA2202385C00E35971 /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA247FC92202385C00E35971 /* UpdateProfileViewController.swift */; };
 		FA247FCE2202517100E35971 /* DLRadioButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FA247FCD2202517000E35971 /* DLRadioButton.m */; };
+		FA72380B236198C7007D1F15 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA72380A236198C7007D1F15 /* CustomButton.swift */; };
+		FA72380D23619EAE007D1F15 /* extensionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA72380C23619EAE007D1F15 /* extensionsVC.swift */; };
 		FA92B53B21FA5B640011FF2F /* ListLikesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92B53A21FA5B640011FF2F /* ListLikesViewController.swift */; };
 		FA92B53D21FA63DA0011FF2F /* LikeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA92B53C21FA63DA0011FF2F /* LikeTableViewCell.swift */; };
 		FA9C35DB21F8FB140033F6E1 /* ListCommentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */; };
@@ -122,6 +124,8 @@
 		FA247FCB2202516D00E35971 /* TechBook-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TechBook-Bridging-Header.h"; sourceTree = "<group>"; };
 		FA247FCC2202516F00E35971 /* DLRadioButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLRadioButton.h; sourceTree = "<group>"; };
 		FA247FCD2202517000E35971 /* DLRadioButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLRadioButton.m; sourceTree = "<group>"; };
+		FA72380A236198C7007D1F15 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		FA72380C23619EAE007D1F15 /* extensionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = extensionsVC.swift; sourceTree = "<group>"; };
 		FA92B53A21FA5B640011FF2F /* ListLikesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListLikesViewController.swift; sourceTree = "<group>"; };
 		FA92B53C21FA63DA0011FF2F /* LikeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikeTableViewCell.swift; sourceTree = "<group>"; };
 		FA9C35DA21F8FB140033F6E1 /* ListCommentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCommentsViewController.swift; sourceTree = "<group>"; };
@@ -258,8 +262,10 @@
 			children = (
 				FA0B4FBC21F5C93300047A9C /* IQKeyboardManagerSwift */,
 				FA0FA78821F7A2A900497644 /* CardView.swift */,
+				FA72380A236198C7007D1F15 /* CustomButton.swift */,
 				FA247FCC2202516F00E35971 /* DLRadioButton.h */,
 				FA247FCD2202517000E35971 /* DLRadioButton.m */,
+				FA72380C23619EAE007D1F15 /* extensionsVC.swift */,
 			);
 			path = "Custom component";
 			sourceTree = "<group>";
@@ -735,6 +741,8 @@
 				FA0B4FD521F5C93300047A9C /* IQPreviousNextView.swift in Sources */,
 				FA07A30621FCDD0100965C98 /* ResultSearch.swift in Sources */,
 				FAE5A56A21F36E7C007A8EA9 /* SignInViewController.swift in Sources */,
+				FA72380D23619EAE007D1F15 /* extensionsVC.swift in Sources */,
+				FA72380B236198C7007D1F15 /* CustomButton.swift in Sources */,
 				FA0B4FE421F5C93300047A9C /* IQNSArray+Sort.swift in Sources */,
 				FA23F40621F67C4900F6F19F /* Like.swift in Sources */,
 				FA92B53D21FA63DA0011FF2F /* LikeTableViewCell.swift in Sources */,

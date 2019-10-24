@@ -40,15 +40,15 @@ class CommentTableViewCell: UITableViewCell {
         self.textComment.text = comment.text
         self.dateComment.text = comment.date
         
-        let tapNameAuthorLabel = UITapGestureRecognizer(target: self, action: #selector(CommentTableViewCell.showProfileOwnerPub))
-        nameAuthor.isUserInteractionEnabled = true
-        nameAuthor.addGestureRecognizer(tapNameAuthorLabel)
+
         
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        let tapNameAuthorLabel = UITapGestureRecognizer(target: self, action: #selector(CommentTableViewCell.showProfileOwnerPub))
+        nameAuthor.isUserInteractionEnabled = true
+        nameAuthor.addGestureRecognizer(tapNameAuthorLabel)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

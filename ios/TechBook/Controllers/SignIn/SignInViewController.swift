@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+
 class SignInViewController: UIViewController {
 
     @IBOutlet weak var emailTxtField: UITextField!
@@ -17,7 +18,14 @@ class SignInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        passwordTxtField.isSecureTextEntry = true
+        
+        //hide keyboard on click outside
+        self.setupHideKeyboardOnTap()
+        
+        // Move keybord between textFields
+        emailTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+        passwordTxtField.addTarget(self, action: #selector(textFieldDidChange(textField:)), for: UIControl.Event.editingDidEndOnExit)
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -113,6 +121,8 @@ class SignInViewController: UIViewController {
         
         }
         
+        
+        
     }
     
     
@@ -142,5 +152,23 @@ class SignInViewController: UIViewController {
         return values
     }
     
+
+}
+
+extension SignInViewController: UITextFieldDelegate {
+    
+    // move keyboard
+    @objc func textFieldDidChange(textField: UITextField){
+        if (self.emailTxtField.isFirstResponder){
+            self.emailTxtField.resignFirstResponder()
+            self.passwordTxtField.becomeFirstResponder()
+            
+        }
+        else if (self.passwordTxtField.isFirstResponder){
+            self.passwordTxtField.resignFirstResponder()
+            
+        }
+        
+    }
 
 }
