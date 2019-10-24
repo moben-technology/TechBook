@@ -145,7 +145,7 @@ router.post('/updateUser', upload.single('file'), function (req, res) {
                         if (user.photo != "avatar.png"){
                             fs.unlink((fullPath), function (err) {
                                 if (err) return console.log(err);
-                                //console.log('file deleted successfully');
+                                console.log('file deleted successfully');
                             });
                         }
 
